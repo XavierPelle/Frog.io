@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 18, 2023 at 09:48 AM
+-- Generation Time: Apr 18, 2023 at 10:41 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.1.0
 
@@ -12,19 +12,16 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Database: `frogio`
 --
 
 -- --------------------------------------------------------
-
-DROP TABLE IF EXISTS stocke;
-DROP TABLE IF EXISTS hybridation;
-DROP TABLE IF EXISTS espece;
-DROP TABLE IF EXISTS collection;
-DROP TABLE IF EXISTS famille;
-DROP TABLE IF EXISTS statutuicn;
-DROP TABLE IF EXISTS users;
 
 --
 -- Table structure for table `collection`
@@ -43,7 +40,6 @@ CREATE TABLE `collection` (
 
 CREATE TABLE `espece` (
   `idEspece` int(11) NOT NULL,
-  `nomVernaculaire` varchar(50) DEFAULT NULL,
   `nomScientifique` varchar(50) DEFAULT NULL,
   `altitudeMax` int(11) DEFAULT NULL,
   `taille` varchar(30) DEFAULT NULL,
@@ -77,6 +73,18 @@ CREATE TABLE `hybridation` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nomvulgaire`
+--
+
+CREATE TABLE `nomvulgaire` (
+  `idNom` int(11) NOT NULL,
+  `nomVernaculaire` varchar(50) DEFAULT NULL,
+  `idEspece` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `statutuicn`
 --
 
@@ -87,7 +95,6 @@ CREATE TABLE `statutuicn` (
   `codeStatut` varchar(2) DEFAULT NULL,
   `descriptionStatut` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -146,6 +153,13 @@ ALTER TABLE `hybridation`
   ADD KEY `idEspece2` (`idEspece2`);
 
 --
+-- Indexes for table `nomvulgaire`
+--
+ALTER TABLE `nomvulgaire`
+  ADD PRIMARY KEY (`idNom`),
+  ADD KEY `idEspece` (`idEspece`);
+
+--
 -- Indexes for table `statutuicn`
 --
 ALTER TABLE `statutuicn`
@@ -187,6 +201,12 @@ ALTER TABLE `famille`
   MODIFY `idFamille` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `nomvulgaire`
+--
+ALTER TABLE `nomvulgaire`
+  MODIFY `idNom` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `statutuicn`
 --
 ALTER TABLE `statutuicn`
@@ -223,9 +243,19 @@ ALTER TABLE `hybridation`
   ADD CONSTRAINT `hybridation_ibfk_2` FOREIGN KEY (`idEspece2`) REFERENCES `espece` (`idEspece`);
 
 --
+-- Constraints for table `nomvulgaire`
+--
+ALTER TABLE `nomvulgaire`
+  ADD CONSTRAINT `nomvulgaire_ibfk_1` FOREIGN KEY (`idEspece`) REFERENCES `espece` (`idEspece`);
+
+--
 -- Constraints for table `stocke`
 --
 ALTER TABLE `stocke`
   ADD CONSTRAINT `stocke_ibfk_1` FOREIGN KEY (`idCollection`) REFERENCES `collection` (`idCollection`),
   ADD CONSTRAINT `stocke_ibfk_2` FOREIGN KEY (`idEspece`) REFERENCES `espece` (`idEspece`);
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
