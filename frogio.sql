@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 18, 2023 at 09:35 AM
+-- Generation Time: Apr 18, 2023 at 09:48 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.1.0
 
@@ -12,16 +12,19 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `frogio`
 --
 
 -- --------------------------------------------------------
+
+DROP TABLE IF EXISTS stocke;
+DROP TABLE IF EXISTS hybridation;
+DROP TABLE IF EXISTS espece;
+DROP TABLE IF EXISTS collection;
+DROP TABLE IF EXISTS famille;
+DROP TABLE IF EXISTS statutuicn;
+DROP TABLE IF EXISTS users;
 
 --
 -- Table structure for table `collection`
@@ -79,11 +82,12 @@ CREATE TABLE `hybridation` (
 
 CREATE TABLE `statutuicn` (
   `idStatut` int(11) NOT NULL,
-  `statut` varchar(20) DEFAULT NULL,
+  `statut` varchar(30) DEFAULT NULL,
   `iconeStatut` varchar(50) DEFAULT NULL,
   `codeStatut` varchar(2) DEFAULT NULL,
-  `descriptionStatut` varchar(50) DEFAULT NULL
+  `descriptionStatut` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -186,7 +190,7 @@ ALTER TABLE `famille`
 -- AUTO_INCREMENT for table `statutuicn`
 --
 ALTER TABLE `statutuicn`
-  MODIFY `idStatut` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idStatut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -225,7 +229,3 @@ ALTER TABLE `stocke`
   ADD CONSTRAINT `stocke_ibfk_1` FOREIGN KEY (`idCollection`) REFERENCES `collection` (`idCollection`),
   ADD CONSTRAINT `stocke_ibfk_2` FOREIGN KEY (`idEspece`) REFERENCES `espece` (`idEspece`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
