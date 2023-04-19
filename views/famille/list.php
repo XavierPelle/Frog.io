@@ -1,5 +1,6 @@
         <main class='container'>
-            <h2>Familles</h2><a href="index.php?page=famille&action=create">Creer une Famille</a>
+            <h2>Familles</h2>
+            <a href="index.php?page=famille&action=create">Creer une Famille</a>
             <table class='table table-striped'>
                 <thead class="thead-dark">
                     <th>Nom Famille</th>
@@ -8,8 +9,9 @@
             <?php
                 foreach ($familles as $famille){
                     echo "<tr>";
-                    echo "<td><a class='text-black text-decoration-none' href='index.php?page=familles&idFamille=$famille->idFamille&action=details'>$famille->nomFamille</a></td>";
-                    echo '<td><a href="index.php?page=famille&action=update&idFamille='.$famille->idFamille.'">Modifier</a></td>';
+                    // echo "<td><a class='text-black text-decoration-none' href='index.php?page=famille&id=$famille->id&action=details'>$famille->nomFamille</a></td>";
+                    echo "<td>$famille->nomFamille</td>";
+                    echo '<td><a href="index.php?page=famille&action=update&id='.$famille->id.'">Modifier</a></td>';
                     echo "</tr>";
                 }
             ?>
