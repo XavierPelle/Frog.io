@@ -11,6 +11,9 @@
                     <li>
                         <a href='index.php?page=collection'>Collection</a>
                     </li>
+                    <li>
+                        <a href='index.php?page=especes'>Espece</a>
+                    </li>
                 </ul>
             </nav>
         </header>
