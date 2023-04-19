@@ -4,7 +4,7 @@ namespace Formation\Cours\Entity;
 use Formation\Cours\Model;
 
 class Famille extends Model {
-    private ?int $idFamille;
+    private ?int $id;
     private ?string $nomFamille;
 
     public function get_object_vars()
@@ -13,21 +13,21 @@ class Famille extends Model {
     }
 
     /**
-     * Get the value of idFamille
+     * Get the value of id
      */ 
-    public function getIdFamille()
+    public function getid()
     {
-        return $this->idFamille;
+        return $this->id;
     }
 
     /**
-     * Set the value of idFamille
+     * Set the value of id
      *
      * @return  self
      */ 
-    public function setIdFamille($idFamille)
+    public function setid($id)
     {
-        $this->idFamille = $idFamille;
+        $this->id = $id;
 
         return $this;
     }

@@ -21,8 +21,8 @@ class Famille {
             case 'create':
                 $this->create();
                 break;
-            case 'details':
-                $this->details();
+            case 'update':
+                $this->create();
                 break;
             default:
                 $this->list();
@@ -40,42 +40,33 @@ class Famille {
         $view->render();
     }
     public function create(){
+        $view = new Views('famille/create');
+        $view->setVar('flashmessage','');
+        if ($this->action === 'update') {
+                $famille = new Familles($this->id);
+                $view->setVar('famille',$famille);
+                $view->setVar('id',$this->id);
+            }
+        if (isset($_POST['submit'])) {
+            $nomFamille = $_POST['nomFamille'];
+            $id = $_POST['id'];
+            if ($this->action === 'update') {
+                $famille = new Familles($this->id);
+            } else {
+                $famille = new Familles();
+            }
+        $famille->nomFamille = $nomFamille;
+        $famille->id = $id;
+        if ($this->action === 'create') {
+            $famille->save();
+            $view->setVar('flashmessage','Famille bien créée');
+        } else {
+            $famille->update();
+            $view->setVar('flashmessage','Famille bien mise à jour');
+        }
+    }
+        $view->setVar('action',$this->action);
+        $view->render();
 
     }
-    public function details(){
-
-    }
-
-//     public function create(){
-//         $view = new Views('personne/create');
-//         $view->setVar('flashmessage','');
-//         if ($this->action === 'update') {
-//                 $personne = new Person($this->id);
-//                 $view->setVar('personne',$personne);
-//                 $view->setVar('id',$this->id);
-//             }
-//         if (isset($_POST['submit'])) {
-//             $name = $_POST['name'];
-//             $lastName = $_POST['lastName'];
-//             $pwd = $_POST['pwd'];
-//             if ($this->action === 'update') {
-//                 $personne = new Person($this->id);
-//             } else {
-//                 $personne = new Person();
-//             }
-//         $personne->name = $name;
-//         $personne->lastName = $lastName;
-//         $personne->pwd = $pwd;
-//         if ($this->action === 'create') {
-//             $personne->save();
-//             $view->setVar('flashmessage','Personne bien créée');
-//         } else {
-//             $personne->update();
-//             $view->setVar('flashmessage','Personne bien mise à jour');
-//         }
-//     }
-//         $view->setVar('action',$this->action);
-//         $view->render();
-// }
-
 }
