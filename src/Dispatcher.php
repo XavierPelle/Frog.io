@@ -28,6 +28,10 @@ class Dispatcher {
     {
         if (is_null($this->page) || $this->page === 'famille') {
             new Famille();
+        }elseif ($this->page === 'collection') {
+           new Collection();
+        }elseif ($this->page === 'especes') {
+            new Especes();
         }
     }
 }
