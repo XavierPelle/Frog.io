@@ -1,0 +1,16 @@
+{
+    "name": "formation/cours",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Formation\\Cours\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jordan"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
