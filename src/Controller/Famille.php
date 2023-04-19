@@ -36,7 +36,7 @@ class Famille {
         $view->setVar('page',$this->page);
         $famille = new Familles();
         $familles = $famille->getAll();
-        $view->setVar('familles',$familles);        
+        $view->setVar('familles',$familles);
         $view->render();
     }
     public function create(){
@@ -49,7 +49,7 @@ class Famille {
             }
         if (isset($_POST['submit'])) {
             $nomFamille = $_POST['nomFamille'];
-            $id = $_POST['id'];
+            $id = null;
             if ($this->action === 'update') {
                 $famille = new Familles($this->id);
             } else {
@@ -60,6 +60,7 @@ class Famille {
         if ($this->action === 'create') {
             $famille->save();
             $view->setVar('flashmessage','Famille bien créée');
+
         } else {
             $famille->update();
             $view->setVar('flashmessage','Famille bien mise à jour');

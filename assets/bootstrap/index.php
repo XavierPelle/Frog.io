@@ -1,3 +1,4 @@
-<?php
+<?php 
 
-header('location: http://'.$_SERVER['SERVER_NAME'].'/template/index.php');
+header('Location: http://localhost:8000/index.php');
+exit;
