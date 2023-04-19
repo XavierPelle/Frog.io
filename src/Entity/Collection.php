@@ -7,13 +7,12 @@ class Collection extends Model {
     private ?int $id;
     private ?string $nomCollection;
     private ?int $especeEnValeur;
+    private ?int $idUsers;
 
     public function get_object_vars()
     {
         return get_object_vars($this);
     }
-
-    
 
     /**
      * Get the value of nomCollection
@@ -71,6 +70,26 @@ class Collection extends Model {
     public function setespeceEnValeur($especeEnValeur)
     {
         $this->especeEnValeur = $especeEnValeur;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idUsers
+     */ 
+    public function getIdUsers()
+    {
+        return $this->idUsers;
+    }
+
+    /**
+     * Set the value of idUsers
+     *
+     * @return  self
+     */ 
+    public function setIdUsers($idUsers)
+    {
+        $this->idUsers = $idUsers;
 
         return $this;
     }

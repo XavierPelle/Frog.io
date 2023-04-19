@@ -3,6 +3,7 @@
 namespace Formation\Cours\Controller;
 use Formation\Cours\Views;
 use Formation\Cours\Entity\Collection as Collections;
+use Formation\Cours\Entity\Stocke;
 
 
 class Collection {
@@ -24,6 +25,9 @@ class Collection {
             case 'update':
                 $this->create();
                 break;
+            case 'details':
+                $this->details();
+                break;
             default:
                 $this->list();
                 break;
@@ -36,7 +40,7 @@ class Collection {
         $view->setVar('page',$this->page);
         $collection = new Collections();
         $collections = $collection->getAll();
-        $view->setVar('collections',$collections);        
+        $view->setVar('collections',$collections);
         $view->render();
     }
     public function create(){
@@ -51,6 +55,7 @@ class Collection {
             $id = $_POST['id'];
             $nomCollection = $_POST['nomCollection'];
             $especeEnValeur = $_POST['especeEnValeur'];
+            $idUsers = $_POST['idUsers'];
             if ($this->action === 'update') {
                 $collection = new Collections($this->id);
             } else {
@@ -59,6 +64,7 @@ class Collection {
             $collection->id = $id;
             $collection->nomCollection = $nomCollection;
             $collection->especeEnValeur = $especeEnValeur;
+            $collection->idUsers = $idUsers;
             if ($this->action === 'create') {
                 $collection->save();
                 $view->setVar('flashmessage','Collection bien créée');
@@ -70,5 +76,17 @@ class Collection {
         $view->setVar('action',$this->action);
         $view->render();
 
+    }
+
+    public function details(){
+        $view = new Views('collection/details');
+        $view->setVar('page',$this->page);
+        $collection = new Collections();
+        $collections = $collection->getAll();
+        $view->setVar('collections',$collections);
+        $stocke = new Stocke();
+        $stockes = $stocke->getAll();
+        $view->setVar('stocke',$stocke);
+        $view->render();
     }
 }

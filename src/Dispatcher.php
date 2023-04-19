@@ -2,6 +2,7 @@
 
 namespace Formation\Cours;
 use Formation\Cours\Controller\Famille;
+use Formation\Cours\Controller\Collection;
 use Formation\Cours\Controller\Especes;
 
 
@@ -27,7 +28,9 @@ class Dispatcher {
     {
         if (is_null($this->page) || $this->page === 'famille') {
             new Famille();
-        }else if($this->page === 'especes'){
+        }elseif ($this->page === 'collection') {
+           new Collection();
+        }elseif ($this->page === 'especes') {
             new Especes();
         }
     }
