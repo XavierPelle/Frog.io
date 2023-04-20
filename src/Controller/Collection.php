@@ -31,6 +31,9 @@ class Collection
             case 'details':
                 $this->details();
                 break;
+            case 'add':
+                $this->add();
+                break;
             default:
                 $this->list();
                 break;
@@ -92,10 +95,26 @@ class Collection
             $espece = new Espece;
             $especes[] = $espece->getById($stock->idEspece);
         }
-
-
-
         $view->setVar('especes', $especes);
         $view->render();
+    }
+
+    public function add(){
+        $view = new Views('collection/add');
+        $view->setVar('page', $this->page);
+        $id = $_GET['id]'];
+        $stocke = new Stocke($id);
+        $stockes = $stocke->getByAttribute('idCollection', $this->id);
+        $especes = [];
+        foreach ($stockes as $stock) {
+            $espece = new Espece;
+            $especes[] = $espece->getById($stock->idEspece);
+        }
+        $view->setVar('especes', $especes);
+        $espece = new Espece();
+        $especes = $espece->getAll();
+        $view->setVar('grenouilles',$especes);
+        $view->render();
+        
     }
 }
