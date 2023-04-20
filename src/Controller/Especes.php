@@ -48,6 +48,7 @@ class Especes {
     public function create(){
         
         $view = new Views('especes/create');
+        $view->setvar('flashmessage','');
 
         $esp = new Famille();
         $esp = $esp->getAll();
@@ -55,7 +56,13 @@ class Especes {
 
         $esps = new Statutuicn();
         $esps = $esps->getAll();
-        $view->setVar('especess',$esps);    
+        $view->setVar('especess',$esps);
+        
+        if ($this->action === 'update') {
+            $modifEsp = new Espece($this->id);
+            $view->setVar('modifesp',$modifEsp);
+            $view->setVar('id',$this->id);
+        }
 
         if (isset($_POST['submit'])) {
 
@@ -79,10 +86,10 @@ class Especes {
             $espece->image = $image;
             if ($this->action === 'create') {
                 $espece->save();
-                $view->setVar('flashmessage','Client bien créé');
+                $view->setVar('flashmessage','L\'espece bien créé');
             } else {
                 $espece->update();
-                $view->setVar('flashmessage','Client bien mis à jour');
+                $view->setVar('flashmessage','L\'espece bien mis à jour');
             }
 
         }
@@ -97,8 +104,21 @@ class Especes {
 
     public function delete()
     {
-        $this->list();
+        if (isset($_POST['delete'])) {
+            $id = intval($_POST['id']);
+            $delesp = new Espece();
+            $delesp->setId($id);
+            if ($this->action === 'delete') {
+                $delesp->delete();
+            }
+        }
+        header("Location: index.php?page=especes");
+        exit();
     }
+    
+    
+    
+
     
 
 }

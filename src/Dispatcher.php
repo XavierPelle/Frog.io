@@ -4,6 +4,7 @@ namespace Formation\Cours;
 use Formation\Cours\Controller\Famille;
 use Formation\Cours\Controller\Collection;
 use Formation\Cours\Controller\Especes;
+use Formation\Cours\Controller\Collection;
 
 
 
@@ -32,6 +33,8 @@ class Dispatcher {
            new Collection();
         }elseif ($this->page === 'especes') {
             new Especes();
+        }else if($this->page === 'collection'){
+            new Collection();
         }
     }
 }
