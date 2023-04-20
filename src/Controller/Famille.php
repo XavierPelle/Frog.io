@@ -24,6 +24,9 @@ class Famille {
             case 'update':
                 $this->create();
                 break;
+            case 'delete':
+                $this->delete();
+                break;
             default:
                 $this->list();
                 break;
@@ -69,5 +72,17 @@ class Famille {
         $view->setVar('action',$this->action);
         $view->render();
 
+    }
+
+    public function delete(){
+        $view = new Views('famille/list');
+        $view->setVar('page',$this->page);
+        $famille = new Familles($_GET['id']);
+        $famille->delete();
+        $famille = new Familles();
+        $familles = $famille->getAll();
+        $view->setVar('familles',$familles);
+        $view->setVar('flashmessage','Famille supprimée');
+        $view->render();
     }
 }
