@@ -49,7 +49,7 @@ class Famille {
             }
         if (isset($_POST['submit'])) {
             $nomFamille = $_POST['nomFamille'];
-            $id = null;
+            $id = $_POST['id'];
             if ($this->action === 'update') {
                 $famille = new Familles($this->id);
             } else {
