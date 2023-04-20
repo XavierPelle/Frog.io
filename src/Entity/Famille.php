@@ -51,4 +51,5 @@ class Famille extends Model {
 
         return $this;
     }
+
 }
