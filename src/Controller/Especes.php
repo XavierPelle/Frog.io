@@ -53,7 +53,7 @@ class Especes {
             $statutuicn = new Statutuicn();
             $statuts[$esp->id] = $statutuicn->getById($esp->idStatut)->statut;
 
-                    $nom_vernaculaire = new Nom_vernaculaire();
+        $nom_vernaculaire = new Nom_vernaculaire();
         $noms_vernaculaires = $nom_vernaculaire->getByAttribute('idEspece', $esp->id);
         $nom_array = [];
         foreach ($noms_vernaculaires as $nom_vern) {

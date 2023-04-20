@@ -12,6 +12,11 @@ class Statutuicn extends Model {
     private ?string $codeStatut;
     private ?string $descriptionStatut;
 
+    public function get_object_vars()
+    {
+        return get_object_vars($this);
+    }
+
     public function getId()
     {
         return $this->id;
