@@ -22,5 +22,5 @@
             echo "</tr>";
         } ?>
     </table>
-    <a href="index.php?page=collection&action=add&id=<?php echo $_GET['id']; ?>">Ajouter une grenouille</a>
+    <a href="index.php?page=collection&action=add&id=<?php echo $_GET['id']; ?>&name=<?php echo $_GET['name']; ?>">Edit Collection</a>
 </main>

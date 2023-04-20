@@ -34,7 +34,7 @@
             echo "<tr>";
             echo "<td>$grenouille->nomScientifique</td>";
             echo "<td>$grenouille->image</td>";
-            echo "<td><a href='index.php?page=collection&action=add&id=".$_GET['id']."'>Ajouter</a></td> ";
+            echo "<td><a href='index.php?page=collection&action=add&id=".$_GET['id']."&name=".$_GET['name']."&idGre=$grenouille->id'>Ajouter</a></td> ";
             echo "</tr>";
         } ?>
     </table>

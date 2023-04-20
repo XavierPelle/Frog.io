@@ -49,7 +49,7 @@ class Collection extends Model {
      */ 
     public function setid($id)
     {
-        $this->id = $id;
+        $this->id = (int)$id;
 
         return $this;
     }
@@ -89,7 +89,7 @@ class Collection extends Model {
      */ 
     public function setIdUsers($idUsers)
     {
-        $this->idUsers = $idUsers;
+        $this->idUsers = (int)$idUsers;
 
         return $this;
     }

@@ -59,16 +59,20 @@ class Collection
             $view->setVar('id', $this->id);
         }
         if (isset($_POST['submit'])) {
-            $id = $_POST['id'];
+            $id = $_GET['id'];
             $nomCollection = $_POST['nomCollection'];
-            $especeEnValeur = $_POST['especeEnValeur'];
             $idUsers = $_POST['idUsers'];
+            // $especeEnValeur= $_POST['especeEnValeur'];
+            $especeEnValeur='1';//en attendant ca marche :shrug: a modif
             if ($this->action === 'update') {
                 $collection = new Collections($this->id);
             } else {
                 $collection = new Collections();
             }
+            $collection->id = $id;
+            $collection->especeEnValeur = $especeEnValeur;
             $collection->nomCollection = $nomCollection;
+            $collection->idUsers = $idUsers;
             if ($this->action === 'create') {
                 $collection->save();
                 $view->setVar('flashmessage', 'Collection bien créée');
@@ -87,8 +91,8 @@ class Collection
     {
         $view = new Views('collection/details');
         $view->setVar('page', $this->page);
-        $id = $_GET['id]'];
-        $stocke = new Stocke($id);
+        $id = $_GET['id'];
+        $stocke = new Stocke();
         $stockes = $stocke->getByAttribute('idCollection', $this->id);
         $especes = [];
         foreach ($stockes as $stock) {
@@ -102,8 +106,16 @@ class Collection
     public function add(){
         $view = new Views('collection/add');
         $view->setVar('page', $this->page);
-        $id = $_GET['id]'];
-        $stocke = new Stocke($id);
+        $id = $_GET['id'];
+        if (isset($_GET['idGre'])) {
+            $idEspece=$_GET['idGre'];
+            $stocke = new Stocke();
+            $stocke->idCollection=$id;
+            $stocke->idEspece=$idEspece;
+            $stocke->save();
+            $view->setVar('flashmessage', 'Grenouille ajoutée');
+        }
+        $stocke = new Stocke();
         $stockes = $stocke->getByAttribute('idCollection', $this->id);
         $especes = [];
         foreach ($stockes as $stock) {

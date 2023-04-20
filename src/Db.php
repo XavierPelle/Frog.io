@@ -87,6 +87,7 @@ class Db extends PDO {
             $i++;
         }
         $sql.=' where id='.$attributes['id'];
+        // echo $sql;
         $query = $this->query($sql);
         $query->execute();
     }
