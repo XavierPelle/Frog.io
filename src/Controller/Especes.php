@@ -41,7 +41,7 @@ class Especes {
         $view->setVar('page',$this->page);
         $espece = new Espece();
         $espece = $espece->getAll();
-        $view->setVar('especes',$espece);        
+        $view->setVar('especes',$espece);
         $view->render();
     }
     
