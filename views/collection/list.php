@@ -12,7 +12,7 @@
                     echo "<tr>";
                     echo "<td><a class='text-black text-decoration-none' href='index.php?page=collection&id=$collection->id&action=details&name=$collection->nomCollection'>$collection->nomCollection</a></td>";
                     echo "<td>$collection->idUsers</td>";
-                    echo '<td><a href="index.php?page=collection&action=update&id='.$collection->id.'">Modifier</a></td>';
+                    echo '<td><a href="index.php?page=collection&action=update&id='.$collection->id.'">Modifier</a> <a href="index.php?page=collection&action=delete&id='.$collection->id.'">Supprimer</a></td>';
                     echo "</tr>";
                 }
             ?>
