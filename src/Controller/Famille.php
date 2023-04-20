@@ -1,14 +1,16 @@
-<?php 
+<?php
 
 namespace Formation\Cours\Controller;
+
 use Formation\Cours\Views;
 use Formation\Cours\Entity\Famille as Familles;
 
 
-class Famille {
-    private string $page='famille';
-    private ?string $id=null;
-    private ?string $action=null;
+class Famille
+{
+    private string $page = 'famille';
+    private ?string $id = null;
+    private ?string $action = null;
     public function __construct()
     {
         if (isset($_GET['id'])) {
@@ -33,23 +35,24 @@ class Famille {
         }
     }
 
-    public function list() 
+    public function list($msg = null)
     {
         $view = new Views('famille/list');
-        $view->setVar('page',$this->page);
+        $view->setVar('page', $this->page);
         $famille = new Familles();
         $familles = $famille->getAll();
-        $view->setVar('familles',$familles);
+        $view->setVar('familles', $familles);
+        $view->setVar('flashmessage', $msg);
         $view->render();
     }
-    public function create(){
+    public function create()
+    {
         $view = new Views('famille/create');
-        $view->setVar('flashmessage','');
         if ($this->action === 'update') {
-                $famille = new Familles($this->id);
-                $view->setVar('famille',$famille);
-                $view->setVar('id',$this->id);
-            }
+            $famille = new Familles($this->id);
+            $view->setVar('famille', $famille);
+            $view->setVar('id', $this->id);
+        }
         if (isset($_POST['submit'])) {
             $nomFamille = $_POST['nomFamille'];
             $id = $_POST['id'];
@@ -58,31 +61,29 @@ class Famille {
             } else {
                 $famille = new Familles();
             }
-        $famille->nomFamille = $nomFamille;
-        $famille->id = $id;
-        if ($this->action === 'create') {
-            $famille->save();
-            $view->setVar('flashmessage','Famille bien créée');
-
-        } else {
-            $famille->update();
-            $view->setVar('flashmessage','Famille bien mise à jour');
+            $famille->nomFamille = $nomFamille;
+            $famille->id = $id;
+            if ($this->action === 'create') {
+                $famille->save();
+                $this->list('Famille bien créée');
+                exit;
+            } else {
+                $famille->update();
+                $this->list('Famille bien mise a jour');
+                exit;
+            }
         }
-    }
-        $view->setVar('action',$this->action);
+        $view->setVar('action', $this->action);
         $view->render();
-
     }
 
-    public function delete(){
-        $view = new Views('famille/list');
-        $view->setVar('page',$this->page);
+    public function delete()
+    {
+        // delete de la famille dont id = $_GET['id']
         $famille = new Familles($_GET['id']);
         $famille->delete();
-        $famille = new Familles();
-        $familles = $famille->getAll();
-        $view->setVar('familles',$familles);
-        $view->setVar('flashmessage','Famille supprimée');
-        $view->render();
+
+        // redirect sur list
+        $this->list('Famille supprimée');
     }
 }

@@ -34,6 +34,9 @@ class Collection
             case 'add':
                 $this->add();
                 break;
+            case 'delete':
+                $this->delete();
+                break;
             default:
                 $this->list();
                 break;
@@ -128,5 +131,16 @@ class Collection
         $view->setVar('grenouilles',$especes);
         $view->render();
         
+    }
+    public function delete(){
+        $view = new Views('collection/list');
+        $view->setVar('page',$this->page);
+        $collection = new Collections($_GET['id']);
+        $collection->delete();
+        $collection = new Collections();
+        $collections = $collection->getAll();
+        $view->setVar('collections',$collections);
+        $view->setVar('flashmessage','Collection supprimée');
+        $view->render();
     }
 }
