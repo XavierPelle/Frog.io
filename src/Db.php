@@ -10,8 +10,8 @@ class Db extends PDO
 
     private static $instance = null;
     private static string $dsn = "mysql:dbname=frogio;host=localhost";
-    private static string $user = "root";
-    private static string $pwd = "root";
+    private static string $user = "pc10";
+    private static string $pwd = "pc10";
 
     private function __construct()
     {
@@ -33,7 +33,9 @@ class Db extends PDO
     public function getAll($objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
+
         $query = "select * from " . $table;
         $results = $this->query($query);
         return $results->fetchAll(PDO::FETCH_CLASS, $space);
@@ -43,7 +45,9 @@ class Db extends PDO
     public function getById($id, $objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
+
         $query = "select * from " . $table . " where id=$id";
         $results = $this->query($query);
         $return = $results->fetchAll(PDO::FETCH_CLASS, $space);
@@ -56,7 +60,9 @@ class Db extends PDO
     public function getByAttribute($name, $value, $objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
+
         $query = "select * from " . $table . " where $name='$value'";
         $results = $this->query($query);
         return $results->fetchAll(PDO::FETCH_CLASS, $space);
@@ -71,7 +77,7 @@ class Db extends PDO
     public function update($objet)
     {
         $space = get_class($objet);
-        $table = $this->getTableName($space);
+        $table = strtolower($this->getTableName($space));
         $attributes = $objet->get_object_vars();
         $sql = "update " . $table . " set ";
         $count = count($attributes) - 1;
@@ -88,7 +94,7 @@ class Db extends PDO
             $i++;
         }
         $sql .= ' where id=' . $attributes['id'];
-        // echo $sql;
+
         $query = $this->query($sql);
         $query->execute();
     }
@@ -96,7 +102,9 @@ class Db extends PDO
     public function deleteById($objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
+
         $sql = 'delete from ' . $table . ' where id=' . $objet->id;
         $query = $this->query($sql);
         $query->execute();
@@ -106,7 +114,9 @@ class Db extends PDO
     public function save($objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
+
         $sql = 'insert into ' . $table;
         $attributes = $objet->get_object_vars();
         $col = '(';
