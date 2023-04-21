@@ -2,6 +2,7 @@
 
 namespace Formation\Cours\Controller;
 
+use Formation\Cours\Entity\Espece;
 use Formation\Cours\Views;
 use Formation\Cours\Entity\Famille as Familles;
 
@@ -28,6 +29,9 @@ class Famille
                 break;
             case 'delete':
                 $this->delete();
+                break;
+            case 'details':
+                $this->details();
                 break;
             default:
                 $this->list();
@@ -85,5 +89,16 @@ class Famille
         $famille->execute($query);
         $famille->delete();
         $this->list("Famille supprimée");
+    }
+
+    public function details()
+    {
+        $view = new Views('famille/details');
+        $view->setVar('page', $this->page);
+        $idF = $_GET['id'];
+        $esp = new Espece();
+        $especes = $esp->getByAttribute('idFamille', $idF);
+        $view->setVar('especes', $especes);
+        $view->render();
     }
 }

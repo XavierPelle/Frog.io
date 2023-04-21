@@ -14,8 +14,8 @@
         <?php
         foreach ($familles as $famille) {
             echo "<tr>";
-            // echo "<td><a class='text-black text-decoration-none' href='index.php?page=famille&id=$famille->id&action=details'>$famille->nomFamille</a></td>";
-            echo "<td>$famille->nomFamille</td>";
+            echo "<td><a class='text-black text-decoration-none' href='index.php?page=famille&name=$famille->nomFamille&id=$famille->id&action=details'>$famille->nomFamille</a></td>";
+            // echo "<td>$famille->nomFamille</td>";
             echo '<td><a href="index.php?page=famille&action=update&id=' . $famille->id . '">Modifier</a> <a href="index.php?page=famille&action=delete&id=' . $famille->id . '">Supprimer</a></td>';
             echo "</tr>";
         }

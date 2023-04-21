@@ -95,7 +95,7 @@ class Collection
     }
 
 
-    public function details($msg=null)
+    public function details($msg = null)
     {
         $view = new Views('collection/details');
         $view->setVar('page', $this->page);
@@ -153,13 +153,12 @@ class Collection
         $stocke = new Stocke();
         $idE = $_GET['idE'];
         $idC = $_GET['idC'];
-        $action='add';
-        $collection= new Collections();
-        $coll=$collection->getById($idC);
+        $action = 'add';
+        $collection = new Collections();
+        $coll = $collection->getById($idC);
         $query = "delete from stocke where idEspece =$idE AND idCollection = $idC;";
         $stocke->execute($query);
         header("Location: index.php?page=collection&action=$action&id=$idC&name=$coll->nomCollection");
         exit();
-
     }
 }
