@@ -6,6 +6,7 @@ use Formation\Cours\Model;
 class Stocke extends Model {
     private ?int $idCollection;
     private ?string $idEspece;
+    // private ?int quantity = 1;
 
     public function get_object_vars()
     {

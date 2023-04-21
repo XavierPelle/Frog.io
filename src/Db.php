@@ -33,7 +33,9 @@ class Db extends PDO
     public function getAll($objet)
     {
         $space = get_class($objet);
-        $table = strtolower($this->getTableName($space));
+
+        $table = $this->getTableName($space);
+
         $query = "select * from " . $table;
         $results = $this->query($query);
         return $results->fetchAll(PDO::FETCH_CLASS, $space);
@@ -43,7 +45,9 @@ class Db extends PDO
     public function getById($id, $objet)
     {
         $space = get_class($objet);
-        $table = strtolower($this->getTableName($space));
+
+        $table = $this->getTableName($space);
+
         $query = "select * from " . $table . " where id=$id";
         $results = $this->query($query);
         $return = $results->fetchAll(PDO::FETCH_CLASS, $space);
@@ -56,7 +60,9 @@ class Db extends PDO
     public function getByAttribute($name, $value, $objet)
     {
         $space = get_class($objet);
-        $table =  strtolower($this->getTableName($space));
+
+        $table = $this->getTableName($space);
+
         $query = "select * from " . $table . " where $name='$value'";
         $results = $this->query($query);
         return $results->fetchAll(PDO::FETCH_CLASS, $space);
@@ -65,7 +71,7 @@ class Db extends PDO
     public function execute($query)
     {
         $results = $this->query($query);
-        return $results->fetchAll();
+        return $results->fetchAll(PDO::FETCH_CLASS);
     }
 
     public function update($objet)
@@ -88,6 +94,7 @@ class Db extends PDO
             $i++;
         }
         $sql .= ' where id=' . $attributes['id'];
+
         $query = $this->query($sql);
         $query->execute();
     }
@@ -95,16 +102,21 @@ class Db extends PDO
     public function deleteById($objet)
     {
         $space = get_class($objet);
-        $table = strtolower($this->getTableName($space));
+
+        $table = $this->getTableName($space);
+
         $sql = 'delete from ' . $table . ' where id=' . $objet->id;
         $query = $this->query($sql);
         $query->execute();
     }
 
+
     public function save($objet)
     {
         $space = get_class($objet);
-        $table = strtolower($this->getTableName($space));
+
+        $table = $this->getTableName($space);
+
         $sql = 'insert into ' . $table;
         $attributes = $objet->get_object_vars();
         $col = '(';
