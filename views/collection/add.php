@@ -1,5 +1,5 @@
 <main class='container'>
-    <?php if (!is_null($flashmessage)) { ?>
+    <?php if (isset($flashmessage) && !is_null($flashmessage)) { ?>
         <div class="alert alert-success" role="alert">
             <?php echo $flashmessage; ?>
         </div>
