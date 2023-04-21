@@ -37,19 +37,23 @@ class Collection
             case 'delete':
                 $this->delete();
                 break;
+            case 'deleteRow':
+                $this->deleteRow();
+                break;
             default:
                 $this->list();
                 break;
         }
     }
 
-    public function list()
+    public function list($msg = null)
     {
         $view = new Views('collection/list');
         $view->setVar('page', $this->page);
         $collection = new Collections();
         $collections = $collection->getAll();
         $view->setVar('collections', $collections);
+        $view->setVar('flashmessage', $msg);
         $view->render();
     }
     public function create()
@@ -66,7 +70,7 @@ class Collection
             $nomCollection = $_POST['nomCollection'];
             $idUsers = $_POST['idUsers'];
             // $especeEnValeur= $_POST['especeEnValeur'];
-            $especeEnValeur='1';//en attendant ca marche :shrug: a modif
+            $especeEnValeur = '1'; //en attendant ca marche :shrug: a modif
             if ($this->action === 'update') {
                 $collection = new Collections($this->id);
             } else {
@@ -78,19 +82,20 @@ class Collection
             $collection->idUsers = $idUsers;
             if ($this->action === 'create') {
                 $collection->save();
-                $view->setVar('flashmessage', 'Collection bien créée');
+                $this->list('Collecion créée');
+                exit;
             } else {
                 $collection->update();
-                $view->setVar('flashmessage', 'Collection bien mise à jour');
+                $this->list('Collection bien mise a jour');
+                exit;
             }
         }
         $view->setVar('action', $this->action);
         $view->render();
-
     }
 
 
-    public function details()
+    public function details($msg=null)
     {
         $view = new Views('collection/details');
         $view->setVar('page', $this->page);
@@ -102,19 +107,21 @@ class Collection
             $espece = new Espece;
             $especes[] = $espece->getById($stock->idEspece);
         }
+        $view->setVar('flashmessage', $msg);
         $view->setVar('especes', $especes);
         $view->render();
     }
 
-    public function add(){
+    public function add()
+    {
         $view = new Views('collection/add');
         $view->setVar('page', $this->page);
         $id = $_GET['id'];
         if (isset($_GET['idGre'])) {
-            $idEspece=$_GET['idGre'];
+            $idEspece = $_GET['idGre'];
             $stocke = new Stocke();
-            $stocke->idCollection=$id;
-            $stocke->idEspece=$idEspece;
+            $stocke->idCollection = $id;
+            $stocke->idEspece = $idEspece;
             $stocke->save();
             $view->setVar('flashmessage', 'Grenouille ajoutée');
         }
@@ -128,19 +135,31 @@ class Collection
         $view->setVar('especes', $especes);
         $espece = new Espece();
         $especes = $espece->getAll();
-        $view->setVar('grenouilles',$especes);
+        $view->setVar('grenouilles', $especes);
         $view->render();
-        
     }
-    public function delete(){
-        $view = new Views('collection/list');
-        $view->setVar('page',$this->page);
-        $collection = new Collections($_GET['id']);
+    public function delete()
+    {
+        $idC = $_GET['id'];
+        $collection = new Collections($idC);
+        $query = "delete from stocke where idCollection = $idC;";
+        $collection->execute($query);
         $collection->delete();
-        $collection = new Collections();
-        $collections = $collection->getAll();
-        $view->setVar('collections',$collections);
-        $view->setVar('flashmessage','Collection supprimée');
-        $view->render();
+        $this->list("Collection supprimée");
+    }
+
+    public function deleteRow()
+    {
+        $stocke = new Stocke();
+        $idE = $_GET['idE'];
+        $idC = $_GET['idC'];
+        $action='add';
+        $collection= new Collections();
+        $coll=$collection->getById($idC);
+        $query = "delete from stocke where idEspece =$idE AND idCollection = $idC;";
+        $stocke->execute($query);
+        header("Location: index.php?page=collection&action=$action&id=$idC&name=$coll->nomCollection");
+        exit();
+
     }
 }
