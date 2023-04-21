@@ -29,7 +29,6 @@
             echo "</tr>";
         } ?>
     </table>
-    <!-- Still in test -->
     <h2>Grenouilles</h2>
     <table class='table table-danger'>
         <thead class="table-info">

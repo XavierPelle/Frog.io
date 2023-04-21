@@ -1,30 +1,31 @@
-<?php 
+<?php
 
 namespace Formation\Cours;
 
-class Model {
+class Model
+{
 
-    public function __construct($id=NULL)
+    public function __construct($id = NULL)
     {
         if (!is_null($id)) {
             $objet = $this->getById($id);
             if (!is_null($objet)) {
                 $vars = $objet->get_object_vars();
-                foreach ($vars as $attribute=>$value) {
+                foreach ($vars as $attribute => $value) {
                     $this->$attribute = $value;
                 }
-            }            
+            }
         }
     }
 
     public function __get($attribute)
     {
-        return call_user_func(array($this, 'get'.ucfirst($attribute)));
+        return call_user_func(array($this, 'get' . ucfirst($attribute)));
     }
 
-    public function __set($attribute,$value)
+    public function __set($attribute, $value)
     {
-        return call_user_func(array($this,'set'.ucfirst($attribute)),$value);
+        return call_user_func(array($this, 'set' . ucfirst($attribute)), $value);
     }
     public function getAll()
     {
@@ -33,14 +34,13 @@ class Model {
 
     public function getById($id)
     {
-        return Db::getInstance()->getById($id,$this);
+        return Db::getInstance()->getById($id, $this);
     }
 
-    public function getByAttribute($name,$value)
+    public function getByAttribute($name, $value)
     {
-        return Db::getInstance()->getByAttribute($name,$value,$this);
+        return Db::getInstance()->getByAttribute($name, $value, $this);
     }
-
 
     public static function execute($sql)
     {
