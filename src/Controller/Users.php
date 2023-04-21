@@ -39,9 +39,9 @@ class Users
             case 'modifiate':
                 $this->modifiate();
                 break;
-                // default:
-                //     $this->login();
-                //     break;
+            default:
+                $this->login();
+                break;
         }
     }
 
@@ -50,7 +50,7 @@ class Users
 
         $user = new User();
         $users = $user->getAll();
-        var_dump($users);
+        // var_dump($users);
         if (count($_POST) !== 0) {
             if (isset($_POST['pseudo'])) {
 
@@ -70,15 +70,15 @@ class Users
                     $_SESSION['id'] = $user->id;
                     $_SESSION['pwd'] = $user->pwd;
                     $error = false;
-                    var_dump($_SESSION);
+                    // var_dump($_SESSION);
                     $this->manage();
                     exit;
                 }
             }
             if ($error === true) {
-                echo "mauvais mot de passe ou pseudo";
-                var_dump($_SESSION);
-                var_dump($_POST);
+                echo "Mauvais mot de passe ou pseudo";
+                // var_dump($_SESSION);
+                // var_dump($_POST);
             }
         }
         $view = new Views('users/login');
@@ -88,7 +88,7 @@ class Users
 
     public function manage()
     {
-        var_dump($_SESSION);
+        // var_dump($_SESSION);
         $view = new Views('users/manage');
         $view->setVar('page', $this->page);
         $view->render();
@@ -99,8 +99,8 @@ class Users
         $view = new Views('users/delete');
         $view->setVar('page', $this->page);
         $user = new User();
-        var_dump($_SESSION);
-        $users = $user->getByAttribute("pseudo", $_SESSION['pseudo'])[0];
+        // var_dump($_SESSION);
+        $users = $user->getByID($_SESSION['id']);
         var_dump($users);
         $users->delete();
         $view->render();
@@ -121,27 +121,22 @@ class Users
             $champ = $_POST['champ'];
             $change = $_POST['change'];
             foreach ($users as $user) {
-
-
                 if ($champ === 'mail' && $change === $user->mail) {
-
                     $error1 = true;
                 }
                 if ($champ === 'pseudo' && $change === $user->pseudo) {
                     $error2 = true;
                 }
             }
-            if ($error1) echo "mail deja utiliser";
-            if ($error2) echo "pseudo deja utiliser";
+            if ($error1) echo "Mail déjà utilisé";
+            if ($error2) echo "Pseudo déjà utilisé";
             if (!$error1 && !$error2) {
-
                 $modifiateUser->$champ = $change;
                 $modifiateUser->update();
                 $this->manage();
                 exit;
             }
         }
-
         $view = new Views('users/modifiate');
         $view->setVar('page', $this->page);
         $view->render();
@@ -157,16 +152,12 @@ class Users
             $mail = $_POST['mail'];
             $error = false;
             foreach ($users as $user) {
-
-
-                if ($pseudo === $user->pseudo || $mail === $user->mail) {
-
+                if (strtolower($pseudo) === strtolower($user->pseudo) || $mail === $user->mail) {
                     $error = true;
                 }
             }
-
             if ($error) {
-                echo "Pseudo ou Mail deja utiliser";
+                echo "Pseudo ou mail déjà utilisé";
             } else {
                 $newUser = new User();
                 $user = new User();
@@ -180,7 +171,7 @@ class Users
                 $_SESSION['pseudo'] = $pseudo;
                 $_SESSION['id'] = $newUser->id;
                 $_SESSION['pwd'] = $newUser->pwd;
-                var_dump($_SESSION);
+                // var_dump($_SESSION);
                 $this->manage();
                 exit;
             }
