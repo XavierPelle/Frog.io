@@ -41,6 +41,7 @@ class Model {
         return Db::getInstance()->getByAttribute($name,$value,$this);
     }
 
+
     public static function execute($sql)
     {
         return Db::getInstance()->execute($sql);

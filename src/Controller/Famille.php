@@ -79,11 +79,11 @@ class Famille
 
     public function delete()
     {
-        // delete de la famille dont id = $_GET['id']
-        $famille = new Familles($_GET['id']);
+        $idF = $_GET['id'];
+        $famille = new Familles($idF);
+        $query = "delete from espece where idFamille = $idF;";
+        $famille->execute($query);
         $famille->delete();
-
-        // redirect sur list
-        $this->list('Famille supprimée');
+        $this->list("Famille supprimée");
     }
 }
