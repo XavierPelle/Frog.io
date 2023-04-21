@@ -17,8 +17,20 @@
           <li class="nav-item">
             <a class="nav-link" href="index.php?page=especes">Espece</a>
           </li>
+          <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] !== true) { ?>
+            <li class="nav-item">
+            <a class="nav-link" href="index.php?page=especes">Mon compte</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.php?page=users&action=logged">Se déconnecter</a>
+          </li>
+          </li>  <?php  ?>
+          <?php }else{ ?>
+            <li class="nav-item"><a class="nav-link" href="index.php?page=users&action=login">Se connecter</a></li>
+          <?php } ?>
         </ul>
       </div>
     </div>
   </nav>
 </header>
+

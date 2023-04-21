@@ -1,24 +1,25 @@
 <?php
+
 namespace Formation\Cours;
 
 use PDOException;
 use PDO;
 
-class Db extends PDO {
-    
-    private static $instance=null;
+class Db extends PDO
+{
+
+    private static $instance = null;
     private static string $dsn = "mysql:dbname=frogio;host=localhost";
-    private static string $user = "root";
-    private static string $pwd = "root";
+    private static string $user = "xav";
+    private static string $pwd = "xavier";
 
     private function __construct()
     {
         try {
-            return parent::__construct(self::$dsn,self::$user,self::$pwd);
+            return parent::__construct(self::$dsn, self::$user, self::$pwd);
         } catch (PDOException $e) {
             die($e->getMessage());
         }
-        
     }
 
     public static function getInstance()
@@ -32,61 +33,68 @@ class Db extends PDO {
     public function getAll($objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
-        $query = "select * from ".$table;
+
+        $query = "select * from " . $table;
         $results = $this->query($query);
-        return $results->fetchAll(PDO::FETCH_CLASS,$space);
+        return $results->fetchAll(PDO::FETCH_CLASS, $space);
         //return $results->fetchAll();
     }
 
-    public function getById($id,$objet)
+    public function getById($id, $objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
-        $query = "select * from ".$table." where id=$id";
+
+        $query = "select * from " . $table . " where id=$id";
         $results = $this->query($query);
-        $return = $results->fetchAll(PDO::FETCH_CLASS,$space);
+        $return = $results->fetchAll(PDO::FETCH_CLASS, $space);
         if (count($return) === 0) {
             return NULL;
         }
         return $return[0];
     }
 
-    public function getByAttribute($name,$value,$objet)
+    public function getByAttribute($name, $value, $objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
-        $query = "select * from ".$table." where $name='$value'";
+
+        $query = "select * from " . $table . " where $name='$value'";
         $results = $this->query($query);
-        return $results->fetchAll(PDO::FETCH_CLASS,$space);
+        return $results->fetchAll(PDO::FETCH_CLASS, $space);
     }
 
     public function execute($query)
     {
         $results = $this->query($query);
-        return $results->fetchAll();
+        return $results->fetchAll(PDO::FETCH_CLASS);
     }
 
     public function update($objet)
     {
         $space = get_class($objet);
-        $table = $this->getTableName($space);
+        $table = strtolower($this->getTableName($space));
         $attributes = $objet->get_object_vars();
-        $sql = "update ".$table." set ";
-        $count = count($attributes)-1; 
+        $sql = "update " . $table . " set ";
+        $count = count($attributes) - 1;
         $i = 0;
-        foreach($attributes as $attribute=>$value) {
+        foreach ($attributes as $attribute => $value) {
             if ($attribute === 'id') {
                 $i++;
                 continue;
             }
-            $sql.=$attribute.'="'.$value.'"';
+            $sql .= $attribute . '="' . $value . '"';
             if ($i < $count) {
                 $sql .= ',';
             }
             $i++;
         }
-        $sql.=' where id='.$attributes['id'];
+        $sql .= ' where id=' . $attributes['id'];
+
         $query = $this->query($sql);
         $query->execute();
     }
@@ -94,36 +102,41 @@ class Db extends PDO {
     public function deleteById($objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
-        $sql = 'delete from '.$table.' where id='.$objet->id;
+
+        $sql = 'delete from ' . $table . ' where id=' . $objet->id;
         $query = $this->query($sql);
         $query->execute();
     }
 
+
     public function save($objet)
     {
         $space = get_class($objet);
+
         $table = $this->getTableName($space);
-        $sql = 'insert into '.$table;
+
+        $sql = 'insert into ' . $table;
         $attributes = $objet->get_object_vars();
         $col = '(';
         $val = '(';
-        $count = count($attributes)-1;
+        $count = count($attributes) - 1;
         $i = 0;
-        foreach ($attributes as $attribute=>$value) {
+        foreach ($attributes as $attribute => $value) {
             if ($attribute === 'id') {
                 $i++;
                 continue;
             }
             $col .= $attribute;
-            $val .= "'".$value."'";
+            $val .= "'" . $value . "'";
             if ($i < $count) {
-                $col.=',';
-                $val.=',';
+                $col .= ',';
+                $val .= ',';
             }
             $i++;
         }
-        $sql.=" ".$col.') values '.$val.')';
+        $sql .= " " . $col . ') values ' . $val . ')';
         if ($this->query($sql)) {
             return 'bien enregistré';
         } else {
@@ -133,8 +146,8 @@ class Db extends PDO {
 
     private function getTableName($espace)
     {
-        $tab = explode('\\',$espace);
-        $count = count($tab)-1;
+        $tab = explode('\\', $espace);
+        $count = count($tab) - 1;
         return $tab[$count];
     }
 }
