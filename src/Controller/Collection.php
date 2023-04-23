@@ -82,7 +82,7 @@ class Collection
             $collection->idUsers = $idUsers;
             if ($this->action === 'create') {
                 $collection->save();
-                $this->list('Collecion créée');
+                $this->list('Collection créée');
                 exit;
             } else {
                 $collection->update();
@@ -100,9 +100,11 @@ class Collection
         $view = new Views('collection/details');
         $view->setVar('page', $this->page);
         $id = $_GET['id'];
+        // On recup les lignes de stocke qui correspondent a la collection
         $stocke = new Stocke();
         $stockes = $stocke->getByAttribute('idCollection', $this->id);
         $especes = [];
+        // on recup l'espece correspondante a la ligne de stocke et on l'assigne au tableau $especes
         foreach ($stockes as $stock) {
             $espece = new Espece;
             $especes[] = $espece->getById($stock->idEspece);
