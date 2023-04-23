@@ -15,7 +15,9 @@
             <th>altitude</th>
             <th>id Famille</th>
             <th>id Statut UICN</th>
-            <th>Supprimer</th>
+            <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) {
+                echo "<th>Supprimer</th>";
+            } ?>
         </thead>
         <?php foreach ($especes as $espece) {
             echo "<tr>";
@@ -25,10 +27,13 @@
             echo "<td>$espece->altitude</td>";
             echo "<td>$espece->idFamille</td>";
             echo "<td>$espece->idStatut</td>";
-            echo "<td><a href='index.php?page=collection&action=deleteRow&idC=" . $_GET['id'] . "&idE=$espece->id'>Supprimer</a></td>";
+            if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) {
+                echo "<td><a href='index.php?page=collection&action=deleteRow&idC=" . $_GET['id'] . "&idE=$espece->id'>Supprimer</a></td>";
+            }
             echo "</tr>";
         } ?>
     </table>
-    <a href="index.php?page=collection&action=add&id=<?php echo $_GET['id']; ?>&name=<?php echo $_GET['name']; ?>">Edit
-        Collection</a>
+    <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) { ?>
+        <a href="index.php?page=collection&action=add&id=<?php echo $_GET['id']; ?>&name=<?php echo $_GET['name']; ?>">Edit Collection</a>
+    <?php } ?>
 </main>
