@@ -6,9 +6,19 @@
                 <label for="nomScientifique" class="form-label">Nom scientifique</label>
                 <input type="text" class="form-control" id="nomScientifique" name="nomScientifique" value="<?php echo (isset($modifesp)) ? $modifesp->nomScientifique : '';?>">
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="inputNom">
                 <label for="nomVernaculaire" class="form-label">Nom vernaculaire</label>
-                <input type="text" class="form-control" id="nomVernaculaire" name="nomVernaculaire" value="">
+                <?php 
+                foreach ($noms as $nom) {
+                    echo "<input type='text' class='form-control' name='nomVernaculaire' value='$nom->nom'><br>";
+                }
+                ?>
+                <script>
+                    function addInput() {
+                        document.getElementById('inputNom').innerHTML += "<input type='text' class='form-control' name='nomVernaculaire'><br>"
+                    }
+                </script>
+                <a href="#" onclick="addInput()">Add name</a>
             </div>
             <div class="mb-3">
                 <label for="altitude" class="form-label">Altitude</label>

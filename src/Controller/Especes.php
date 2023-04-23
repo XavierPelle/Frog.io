@@ -65,10 +65,8 @@ class Especes
             $familles[$esp->id] = $famille->getById($esp->idFamille)->nomFamille; 
 
          // Permet de récuperer la propriété nomFamille grace a la méthode getByID qui fait référence à la classe famille sur l'objet $famille
-
             $statutuicn = new Statutuicn();
             $statuts[$esp->id] = $statutuicn->getById($esp->idStatut)->statut;
-
 
             $nom_vernaculaire = new Nom_vernaculaire();
             $noms_vernaculaires = $nom_vernaculaire->getByAttribute('idEspece', $esp->id);
@@ -105,6 +103,10 @@ class Especes
         $esps = $esps->getAll();
         $view->setVar('especess', $esps);
 
+        $nom = new Nom_vernaculaire();
+        $noms=$nom->getByAttribute('idEspece',$this->id);
+        $view->setVar('noms',$noms);
+
         // Si on est en mode 'update', je récupère l'espèce à modifier.
         if ($this->action === 'update') {
             $modifEsp = new Espece($this->id);
@@ -117,6 +119,7 @@ class Especes
 
             // Récupère les données du formulaire.
             $nomScientifique = $_POST['nomScientifique'];
+            $nomVernaculaire = $_POST['nomVernaculaire'];
             $altitude = $_POST['altitude'];
             $taille = $_POST['taille'];
             $idStatut = $_POST['idStatut'];
@@ -166,6 +169,12 @@ class Especes
 
             // Enregistre ou met à jour l'espèce.
             if ($this->action === 'create') {
+                foreach ($nomVernaculaire as $nom) {
+                    $no= new Nom_vernaculaire();
+                    $no->idEspece = $this->id;
+                    $no->nom = $nom->nom;
+                    $no->save();
+                }
                 $espece->save();
                 $view->setVar('flashmessage', "L'espèce a bien été créée");
             } else {
