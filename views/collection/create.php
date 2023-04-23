@@ -1,7 +1,4 @@
 <main>
-    <div class="alert alert-success" role="alert">
-        <?php echo $_SESSION['id']; ?>
-    </div>
     <form action="index.php?page=collection&action=<?php echo $action;
                                                     echo (isset($id)) ? '&id=' . $id : ''; ?>" method="POST">
         <input type="hidden" name="id" value="<?php echo (isset($collection)) ? $collection->id : null; ?>" hidden>
