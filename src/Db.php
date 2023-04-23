@@ -10,8 +10,10 @@ class Db extends PDO
 
     private static $instance = null;
     private static string $dsn = "mysql:dbname=frogio;host=localhost";
-    private static string $user = "root";
-    private static string $pwd = "root";
+
+    private static string $user = "pc10";
+    private static string $pwd = "pc10";
+
 
     private function __construct()
     {
@@ -34,7 +36,7 @@ class Db extends PDO
     {
         $space = get_class($objet);
 
-        $table = $this->getTableName($space);
+        $table = strtolower($this->getTableName($space));
 
         $query = "select * from " . $table;
         $results = $this->query($query);
@@ -46,7 +48,7 @@ class Db extends PDO
     {
         $space = get_class($objet);
 
-        $table = $this->getTableName($space);
+        $table = strtolower($this->getTableName($space));
 
         $query = "select * from " . $table . " where id=$id";
         $results = $this->query($query);
@@ -61,7 +63,7 @@ class Db extends PDO
     {
         $space = get_class($objet);
 
-        $table = $this->getTableName($space);
+        $table = strtolower($this->getTableName($space));
 
         $query = "select * from " . $table . " where $name='$value'";
         $results = $this->query($query);
@@ -103,7 +105,7 @@ class Db extends PDO
     {
         $space = get_class($objet);
 
-        $table = $this->getTableName($space);
+        $table = strtolower($this->getTableName($space));
 
         $sql = 'delete from ' . $table . ' where id=' . $objet->id;
         $query = $this->query($sql);
@@ -115,7 +117,7 @@ class Db extends PDO
     {
         $space = get_class($objet);
 
-        $table = $this->getTableName($space);
+        $table = strtolower($this->getTableName($space));
 
         $sql = 'insert into ' . $table;
         $attributes = $objet->get_object_vars();
