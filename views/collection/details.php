@@ -4,36 +4,29 @@
             <?php echo $flashmessage; ?>
         </div>
     <?php } ?>
-    <h2>
+    <h2 class="mb-4 d-flex justify-content-center mt-3 mb-3 text-success">
         <?php echo $_GET['name']; ?>
     </h2>
-    <table class='table table-striped'>
-        <thead>
-            <th>id</th>
-            <th>nom</th>
-            <th>taille</th>
-            <th>altitude</th>
-            <th>id Famille</th>
-            <th>id Statut UICN</th>
-            <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) {
-                echo "<th>Supprimer</th>";
-            } ?>
-        </thead>
-        <?php foreach ($especes as $espece) {
-            echo "<tr>";
-            echo "<td>$espece->id</td>";
-            echo "<td>$espece->nomScientifique</td>";
-            echo "<td>$espece->taille</td>";
-            echo "<td>$espece->altitude</td>";
-            echo "<td>$espece->idFamille</td>";
-            echo "<td>$espece->idStatut</td>";
-            if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) {
-                echo "<td><a href='index.php?page=collection&action=deleteRow&idC=" . $_GET['id'] . "&idE=$espece->id'>Supprimer</a></td>";
-            }
-            echo "</tr>";
-        } ?>
-    </table>
+    <div class="row">
+        <?php foreach ($especes as $espece) { ?>
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="<?php echo $espece->image; ?>" class="card-img-top" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <p class="card-text">Nom: <?php echo $espece->nomScientifique; ?></p>
+                        <p class="card-text">Taille: <?php echo $espece->taille; ?></p>
+                        <p class="card-text">Altitude: <?php echo $espece->altitude; ?></p>
+                        <p class="card-text">ID Famille: <?php echo $espece->idFamille; ?></p>
+                        <p class="card-text">ID Statut UICN: <?php echo $espece->idStatut; ?></p>
+                        <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) { ?>
+                            <a href='index.php?page=collection&action=deleteRow&idC=<?php echo $_GET['id']; ?>&idE=<?php echo $espece->id; ?>' class="btn btn-danger">Supprimer</a>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
     <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) { ?>
-        <a href="index.php?page=collection&action=add&id=<?php echo $_GET['id']; ?>&name=<?php echo $_GET['name']; ?>">Edit Collection</a>
+        <a href="index.php?page=collection&action=add&id=<?php echo $_GET['id']; ?>&name=<?php echo $_GET['name']; ?>" class="btn btn-primary mt-4">Éditer la Collection</a>
     <?php } ?>
 </main>

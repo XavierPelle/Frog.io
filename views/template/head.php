@@ -29,5 +29,13 @@
                 .nav-link {
                 font-weight: bold;
                 }
+                .fixed-navbar-bottom {
+                bottom: 0;
+                width: 100%;
+                z-index: 1030;
+                }
+                main{
+                        min-height: 66.9vh;
+                }
         </style>
 </head>

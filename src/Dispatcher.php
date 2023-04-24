@@ -32,10 +32,10 @@ class Dispatcher
 
     public function dispatch()
     {
-        if (is_null($this->page) || $this->page === 'famille') {
-            new Famille();
-        } elseif ($this->page === 'collection') {
+        if (is_null($this->page) || $this->page === 'collection') {
             new Collection();
+        } elseif ($this->page === 'famille') {
+            new Famille();
         } elseif ($this->page === 'especes') {
             new Especes();
         } else if ($this->page === 'collection') {
