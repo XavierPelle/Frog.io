@@ -1,6 +1,8 @@
 <main>
 <div class="container">
-        <h1 class="my-3">Ajouter une espèce</h1>
+        <h1 class="my-3">
+            <?php echo ($action == 'update') ? "Modifier une espèce" : "Ajouter une espèce"; ?>
+        </h1>
         <form action="index.php?page=especes&action=<?php echo $action; echo (isset($id)) ? '&id='.$id : '';?>" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="nomScientifique" class="form-label">Nom scientifique</label>
@@ -48,7 +50,10 @@
                 <label for="image" class="form-label">Image</label>
                 <input type="file" class="form-control" id="image" name="image" accept="image/jpeg,image/png">
             </div>
-            <button type="submit" class="btn btn-primary" name="submit" value="submit">Ajouter l'espèce</button>
+            <button type="submit" class="btn btn-primary" name="submit" value="submit">
+                <?php echo ($action == 'update') ? "Modifier l'espèce" : "Ajouter l'espèce"; ?>
+            </button>
+
         </form>
     </div>
 </main>
