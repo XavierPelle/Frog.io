@@ -159,7 +159,7 @@ class Especes
                             echo "Le fichier a été téléchargé avec succès.";
                             $espece->image = $targetFile;
                         } else {
-                            echo "Erreur lors de l'envoi de l'image. Code d'erreur : " . $_FILES['image']['error'];
+                            echo "Erreur lors de l'envoi de l'image.";
                         }
                     }
                 }
