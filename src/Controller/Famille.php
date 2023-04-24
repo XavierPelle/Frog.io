@@ -85,8 +85,10 @@ class Famille
     {
         $idF = $_GET['id'];
         $famille = new Familles($idF);
+        // delete des especes de la famille
         $query = "delete from espece where idFamille = $idF;";
         $famille->execute($query);
+        // delete de la famille
         $famille->delete();
         $this->list("Famille supprimée");
     }

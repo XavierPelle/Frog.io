@@ -39,6 +39,7 @@
         <?php foreach ($grenouilles as $grenouille) {
             $bool=false;
             foreach ($especes as $espece) {
+                // test si l'espece est dans la collection
                 if ($grenouille->id === $espece->id) {
                     $bool = true;
                 }
