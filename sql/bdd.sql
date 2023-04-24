@@ -81,15 +81,15 @@ INSERT INTO famille (nomFamille) VALUES
 
 INSERT INTO `statutuicn` (`statut`, `iconeStatut`, `codeStatut`, `descriptionStatut`) VALUES
 
-('Eteint', 'ex.png', 'EX', 'Aucun individu survivant connu.'),
-('Éteint à l\'état sauvage', 'ew.png', 'EW', 'Survivants connus uniquement en captivité, ou vivant en dehors de leur habitat d\'origine.'),
-('En danger critique', 'cr.png', 'CR', 'Risque d\'extinction dans la nature extrêmement élevé.'),
-('En danger', 'en.png', 'EN', 'Haut risque d\'extinction dans la nature.'),
-('Vulnérable', 'vu.png', 'VU', 'Haut risque de mise en danger.'),
-('Quasi menacé', 'nt.png', 'NT', 'Probabilité d\'être en danger dans un futur proche.'),
-('Préoccupation mineure', 'lc.png', 'LC', 'Ne remplit pas les critères d\'une catégorie en danger. Les animaux répandus et abondants appartiennent à cette catégorie.'),
-('Données insuffisantes', 'dd.png', 'DD', 'Pas assez de données pour évaluer le risque d\'extinction.'),
-('Non évalué', 'ne.png', 'NE', 'N\'a pas encore été évaluée.');
+('Eteint', 'uploads/ex.png', 'EX', 'Aucun individu survivant connu.'),
+('Éteint à l\'état sauvage', 'uploads/ew.png', 'EW', 'Survivants connus uniquement en captivité, ou vivant en dehors de leur habitat d\'origine.'),
+('En danger critique', 'uploads/cr.png', 'CR', 'Risque d\'extinction dans la nature extrêmement élevé.'),
+('En danger', 'uploads/en.png', 'EN', 'Haut risque d\'extinction dans la nature.'),
+('Vulnérable', 'uploads/vu.png', 'VU', 'Haut risque de mise en danger.'),
+('Quasi menacé', 'uploads/nt.png', 'NT', 'Probabilité d\'être en danger dans un futur proche.'),
+('Préoccupation mineure', 'uploads/lc.png', 'LC', 'Ne remplit pas les critères d\'une catégorie en danger. Les animaux répandus et abondants appartiennent à cette catégorie.'),
+('Données insuffisantes', 'uploads/dd.png', 'DD', 'Pas assez de données pour évaluer le risque d\'extinction.'),
+('Non évalué', 'uploads/ne.png', 'NE', 'N\'a pas encore été évaluée.');
 
 INSERT INTO espece (nomScientifique, altitude, taille, image, idStatut, idFamille) VALUES
 ('Bufo bufo', 1000, 15, NULL, 6, 1),

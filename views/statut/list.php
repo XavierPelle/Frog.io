@@ -11,7 +11,7 @@
         foreach ($statuts as $statut) {
             echo "<tr>";
             echo "<td>$statut->statut</td>";
-            echo "<td>$statut->iconeStatut</td>";
+            echo "<td><img src='$statut->iconeStatut' height='87px' width='100px'/></td>";
             echo "<td>$statut->codeStatut</td>";
             echo "<td>$statut->descriptionStatut</td>";
             echo "</tr>";
