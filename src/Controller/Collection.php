@@ -114,6 +114,9 @@ class Collection
             $espece = new Espece;
             $especes[] = $espece->getById($stock->idEspece);
         }
+        $coll = new Collections();
+        $col=$coll->getById($id);
+        $view->setVar('col', $col);
         $view->setVar('flashmessage', $msg);
         $view->setVar('especes', $especes);
         $view->render();
