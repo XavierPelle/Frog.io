@@ -11,8 +11,8 @@ class Db extends PDO
     private static $instance = null;
     private static string $dsn = "mysql:dbname=frogio;host=localhost";
 
-    private static string $user = "xav";
-    private static string $pwd = "xavier";
+    private static string $user = "root";
+    private static string $pwd = "root";
 
 
     private function __construct()

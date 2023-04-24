@@ -62,9 +62,9 @@ class Especes
         // Parcourt toutes les espèces et récupère les informations associées.
         foreach ($espece as $esp) {
             $famille = new Famille();
-            $familles[$esp->id] = $famille->getById($esp->idFamille)->nomFamille; 
+            $familles[$esp->id] = $famille->getById($esp->idFamille)->nomFamille;
 
-         // Permet de récuperer la propriété nomFamille grace a la méthode getByID qui fait référence à la classe famille sur l'objet $famille
+            // Permet de récuperer la propriété nomFamille grace a la méthode getByID qui fait référence à la classe famille sur l'objet $famille
             $statutuicn = new Statutuicn();
             $statuts[$esp->id] = $statutuicn->getById($esp->idStatut)->statut;
 
@@ -103,8 +103,8 @@ class Especes
         $view->setVar('especess', $esps);
 
         $nom = new Nom_vernaculaire();
-        $noms=$nom->getByAttribute('idEspece',$this->id);
-        $view->setVar('noms',$noms);
+        $noms = $nom->getByAttribute('idEspece', $this->id);
+        $view->setVar('noms', $noms);
 
         // Si on est en mode 'update', je récupère l'espèce à modifier.
         if ($this->action === 'update') {
@@ -168,7 +168,7 @@ class Especes
             // Enregistre ou met à jour l'espèce.
             if ($this->action === 'create') {
                 foreach ($nomVernaculaire as $nom) {
-                    $no= new Nom_vernaculaire();
+                    $no = new Nom_vernaculaire();
                     $no->idEspece = $this->id;
                     $no->nom = $nom->nom;
                     $no->save();
@@ -209,10 +209,8 @@ class Especes
 
             // Supprime les stocke associés à l'espèce.
             $stocke = new Stocke();
-            $stockes = $stocke->getByAttribute('idEspece', $id);
-            foreach ($stockes as $stocke) {
-                $stocke->delete();
-            }
+            $query = "delete from stocke where idEspece = $id ;";
+            $stocke->execute($query);
 
             // Supprime l'espèce.
             $delesp = new Espece();
