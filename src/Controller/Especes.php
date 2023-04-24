@@ -5,6 +5,7 @@ namespace Formation\Cours\Controller;
 // Permet d'importer les autres classes que nous utiliserons dans cette classe.
 use Formation\Cours\Entity\Espece;
 use Formation\Cours\Entity\Famille;
+use Formation\Cours\Entity\Parents;
 use Formation\Cours\Entity\Statutuicn;
 use Formation\Cours\Entity\Nom_vernaculaire;
 use Formation\Cours\Entity\Stocke;
@@ -30,6 +31,9 @@ class Especes
         // Permet d'exécuter une action en fonction de la valeur de 'action'.
         switch ($this->action) {
             case 'create':
+                $this->create();
+                break;
+            case 'createH':
                 $this->create();
                 break;
             case 'update':
@@ -112,6 +116,11 @@ class Especes
             $view->setVar('modifesp', $modifEsp);
             $view->setVar('id', $this->id);
         }
+        if ($this->action === 'createH') {
+            $espece = new Espece();
+            $especeAll = $espece->getAll();
+            $view->setVar('especeALL', $especeAll);
+        }
 
         if (isset($_POST['submit'])) {
 
@@ -139,7 +148,7 @@ class Especes
             $espece->idFamille = $idFamille;
 
             // Si une image a été envoyée.
-            if (isset($_FILES['image'])) { 
+            if (isset($_FILES['image'])) {
 
                 // Gère le téléchargement de l'image.
                 $uploadDir = 'uploads/';
@@ -174,6 +183,30 @@ class Especes
                     $no->save();
                 }
                 $espece->save();
+                $view->setVar('flashmessage', "L'espèce a bien été créée");
+                header('Location: index.php?page=especes');
+            } elseif ($this->action === 'createH') {
+                // foreach ($nomVernaculaire as $nom) {
+                //     $no = new Nom_vernaculaire();
+                //     $no->idEspece = $this->id;
+                //     $no->nom = $nom->nom;
+                //     $no->save();
+                // }
+                $espece->save();
+                // need get id de $espece
+                $espece = $espece->getByAttribute('nomScientifique', $nomScientifique)[0];
+                var_dump($espece);
+                // add dans parent TODO
+                $parent1 = $_POST['parent1'];
+                $parent2 = $_POST['parent2'];
+                $parent1BDD = new Parents();
+                $parent1BDD->idEspece = $espece->id;
+                $parent1BDD->idParent = $parent1;
+                $parent1BDD->save();
+                $parent2BDD = new Parents();
+                $parent2BDD->idEspece = $espece->id;
+                $parent2BDD->idParent = $parent2;
+                $parent2BDD->save();
                 $view->setVar('flashmessage', "L'espèce a bien été créée");
                 header('Location: index.php?page=especes');
             } else {
