@@ -7,6 +7,7 @@ use Formation\Cours\Entity\Espece;
 use Formation\Cours\Entity\Famille;
 use Formation\Cours\Entity\Statutuicn;
 use Formation\Cours\Entity\Nom_vernaculaire;
+use Formation\Cours\Entity\Stocke;
 use Formation\Cours\Views;
 
 class Especes
@@ -206,6 +207,13 @@ class Especes
             $noms_vernaculaires = $nom_vernaculaire->getByAttribute('idEspece', $id);
             foreach ($noms_vernaculaires as $nom_vern) {
                 $nom_vern->delete();
+            }
+
+            // Supprime les stocke associés à l'espèce.
+            $stocke = new Stocke();
+            $stockes = $stocke->getByAttribute('idEspece', $id);
+            foreach ($stockes as $stocke) {
+                $stocke->delete();
             }
 
             // Supprime l'espèce.

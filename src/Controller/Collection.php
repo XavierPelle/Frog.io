@@ -6,6 +6,7 @@ use Formation\Cours\Views;
 use Formation\Cours\Entity\Collection as Collections;
 use Formation\Cours\Entity\Stocke;
 use Formation\Cours\Entity\Espece;
+use Formation\Cours\Entity\Users;
 
 
 class Collection
@@ -52,6 +53,10 @@ class Collection
         $view->setVar('page', $this->page);
         $collection = new Collections();
         $collections = $collection->getAll();
+        // chgmnt idUsers to nom users TODO
+        $user=new Users();
+        $users = $user->getAll();
+        $view->setVar('users', $users);
         $view->setVar('collections', $collections);
         $view->setVar('flashmessage', $msg);
         $view->render();
