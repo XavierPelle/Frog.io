@@ -1,4 +1,4 @@
-<body>
+<body style="height: 100%">
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -19,10 +19,10 @@
           </li>
           <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) { ?>
             <li class="nav-item">
-            <a class="nav-link" href="index.php?page=users&action=manage">Mon compte</a>
+            <a class="nav-link" href="index.php?page=users&action=logged">Mon compte</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?page=users&action=logged">Se déconnecter</a>
+            <a class="nav-link" href="index.php?page=users&action=logout">Se déconnecter</a>
           </li>
           </li>  <?php  ?>
           <?php }else{ ?>

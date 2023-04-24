@@ -4,26 +4,36 @@
             <?php echo $flashmessage; ?>
         </div>
     <?php } ?>
-    <h2>Collections</h2>
-    <a href="index.php?page=collection&action=create">Creer une Collection</a>
-    <table class='table table-striped'>
-        <thead class="thead-dark">
-            <th>Nom Collection</th>
-            <th>Id createur</th>
-            <th>Action</th>
-        </thead>
+    <h2 class="mb-4 d-flex justify-content-center mt-4 text-success ">Collections</h2>
+    <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) { ?>
+    <a href="index.php?page=collection&action=create" class="btn btn-primary mb-4">Créer une Collection</a>
+    <?php }?>
+    <div class="row">
         <?php
         foreach ($collections as $collection) {
-            echo "<tr>
-                <td><a class='text-black text-decoration-none' href='index.php?page=collection&id=$collection->id&action=details&idUsers=$collection->idUsers&name=$collection->nomCollection'>$collection->nomCollection</a></td>
-                <td>$collection->idUsers</td>";
-                if (isset($_SESSION['id']) && $_SESSION['id'] === $collection->idUsers) {
-                echo '<td><a href="index.php?page=collection&action=update&id=' . $collection->id . '">Modifier</a> <a href="index.php?page=collection&action=delete&id=' . $collection->id . '">Supprimer</a></td>';
-                } else{
-                    echo '<td></td>';
-                }
-            echo "</tr>";
+            ?>
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $collection->nomCollection; ?></h5>
+
+                        <p class="card-text">Id créateur: <?php echo $collection->idUsers; ?></p>
+                        <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) { ?>
+                        <a href='index.php?page=collection&id=<?php echo $collection->id; ?>&action=details&idUsers=<?php echo $collection->idUsers; ?>&name=<?php echo $collection->nomCollection; ?>' class="btn btn-info">Détails</a>
+                        <?php }?>
+                        <?php
+                        if (isset($_SESSION['id']) && $_SESSION['id'] === $collection->idUsers) {
+                        ?>
+                            <a href="index.php?page=collection&action=update&id=<?php echo $collection->id; ?>" class="btn btn-warning">Modifier</a>
+                            <a href="index.php?page=collection&action=delete&id=<?php echo $collection->id; ?>" class="btn btn-danger">Supprimer</a>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <?php
         }
         ?>
-    </table>
+    </div>
 </main>
