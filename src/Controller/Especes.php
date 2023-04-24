@@ -55,7 +55,6 @@ class Especes
         $espece = new Espece();
         $espece = $espece->getAll();
 
-        // Je prépare les tableaux pour stocker les informations sur les familles, statuts et noms vernaculaires qui sont dans des tables à part.
         $familles = [];
         $statuts = [];
         $nom = [];
@@ -84,7 +83,6 @@ class Especes
         $view->setVar('familles', $familles);
         $view->setVar('especes', $espece);
 
-        // Affiche la vue.
         $view->render();
     }
 
@@ -95,7 +93,7 @@ class Especes
         $view = new Views('especes/create');
         $view->setVar('flashmessage', '');
 
-        // Récupère toutes les familles et les statuts.
+        // Récupère toutes les familles, les statuts , les noms vernaculaires.
         $esp = new Famille();
         $esp = $esp->getAll();
         $view->setVar('especes', $esp);
@@ -115,7 +113,6 @@ class Especes
             $view->setVar('id', $this->id);
         }
 
-        // Si le formulaire est soumis.
         if (isset($_POST['submit'])) {
 
             // Récupère les données du formulaire.
@@ -142,7 +139,7 @@ class Especes
             $espece->idFamille = $idFamille;
 
             // Si une image a été envoyée.
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) { //$_FILES['image']['error'] === 0 code erreur en php s'il est égale a 0 c'est qui y a aucun problème
+            if (isset($_FILES['image'])) { 
 
                 // Gère le téléchargement de l'image.
                 $uploadDir = 'uploads/';
@@ -162,7 +159,7 @@ class Especes
                             echo "Le fichier a été téléchargé avec succès.";
                             $espece->image = $targetFile;
                         } else {
-                            echo "Erreur lors de l'envoi de l'image. Code d'erreur : " . $_FILES['image']['error'];
+                            echo "Erreur lors de l'envoi de l'image.";
                         }
                     }
                 }
@@ -178,6 +175,7 @@ class Especes
                 }
                 $espece->save();
                 $view->setVar('flashmessage', "L'espèce a bien été créée");
+                header('Location: index.php?page=especes');
             } else {
                 $espece->update();
                 $view->setVar('flashmessage', "L'espèce a bien été mise à jour");

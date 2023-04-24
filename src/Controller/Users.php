@@ -11,7 +11,6 @@ class Users
 {
     private string $page = 'users';
     private ?string $id = null;
-
     private ?string $statut = null;
     private ?string $action = null;
 
