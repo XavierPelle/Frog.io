@@ -66,11 +66,11 @@ class Collection
             $view->setVar('id', $this->id);
         }
         if (isset($_POST['submit'])) {
-            $id = $_GET['id'];
+            $id = $_POST['id'];
             $nomCollection = $_POST['nomCollection'];
             $idUsers = $_POST['idUsers'];
             // $especeEnValeur= $_POST['especeEnValeur'];
-            $especeEnValeur = '1'; //en attendant ca marche :shrug: a modif
+            $especeEnValeur = '2'; //en attendant ca marche :shrug: a modif
             if ($this->action === 'update') {
                 $collection = new Collections($this->id);
             } else {
