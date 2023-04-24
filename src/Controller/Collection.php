@@ -41,6 +41,9 @@ class Collection
             case 'deleteRow':
                 $this->deleteRow();
                 break;
+            case 'valor':
+                $this->valor();
+                break;
             default:
                 $this->list();
                 break;
@@ -54,7 +57,7 @@ class Collection
         $collection = new Collections();
         $collections = $collection->getAll();
         // chgmnt idUsers to nom users TODO
-        $user=new Users();
+        $user = new Users();
         $users = $user->getAll();
         $view->setVar('users', $users);
         $view->setVar('collections', $collections);
@@ -115,7 +118,7 @@ class Collection
             $especes[] = $espece->getById($stock->idEspece);
         }
         $coll = new Collections();
-        $col=$coll->getById($id);
+        $col = $coll->getById($id);
         $view->setVar('col', $col);
         $view->setVar('flashmessage', $msg);
         $view->setVar('especes', $especes);
@@ -169,6 +172,18 @@ class Collection
         $query = "delete from stocke where idEspece =$idE AND idCollection = $idC;";
         $stocke->execute($query);
         header("Location: index.php?page=collection&action=$action&id=$idC&name=$coll->nomCollection");
+        exit();
+    }
+
+    public function valor()
+    {
+        $idE = $_GET['idE'];
+        $idC = $_GET['idC'];
+        $collection = new Collections($idC);
+        $collection->id = $idC;
+        $collection->especeEnValeur = $idE;
+        $collection->update();
+        header("Location: index.php?page=collection&action=details&idUsers=$collection->idUsers&id=$idC&name=$collection->nomCollection");
         exit();
     }
 }
