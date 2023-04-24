@@ -1,10 +1,12 @@
-<?php 
+<?php
 
 namespace Formation\Cours\Entity;
+
 use Formation\Cours\Model;
 use Formation\Cours\Db;
 
-class Statutuicn extends Model {
+class Statutuicn extends Model
+{
 
     private ?int $id;
     private ?string $statut;
@@ -37,7 +39,7 @@ class Statutuicn extends Model {
 
     public function setStatut($statut)
     {
-        $this->statut = $statut;
+        $this->statut = htmlspecialchars(addslashes($statut));
 
         return $this;
     }
@@ -50,12 +52,12 @@ class Statutuicn extends Model {
 
     public function setIconeStatut($iconeStatut)
     {
-        $this->iconeStatut = $iconeStatut;
+        $this->iconeStatut = htmlspecialchars(addslashes($iconeStatut));
 
         return $this;
     }
 
- 
+
     public function getCodeStatut()
     {
         return $this->codeStatut;
@@ -64,7 +66,7 @@ class Statutuicn extends Model {
 
     public function setCodeStatut($codeStatut)
     {
-        $this->codeStatut = $codeStatut;
+        $this->codeStatut = htmlspecialchars(addslashes($codeStatut));
 
         return $this;
     }
@@ -76,7 +78,7 @@ class Statutuicn extends Model {
 
     public function setDescriptionStatut($descriptionStatut)
     {
-        $this->descriptionStatut = $descriptionStatut;
+        $this->descriptionStatut = htmlspecialchars(addslashes($descriptionStatut));
 
         return $this;
     }

@@ -1,9 +1,11 @@
-<?php 
+<?php
 
 namespace Formation\Cours\Entity;
+
 use Formation\Cours\Model;
 
-class Collection extends Model {
+class Collection extends Model
+{
     private ?int $id;
     private ?string $nomCollection;
     private ?int $especeEnValeur;
@@ -16,7 +18,7 @@ class Collection extends Model {
 
     /**
      * Get the value of nomCollection
-     */ 
+     */
     public function getNomCollection()
     {
         return $this->nomCollection;
@@ -26,17 +28,17 @@ class Collection extends Model {
      * Set the value of nomCollection
      *
      * @return  self
-     */ 
+     */
     public function setNomCollection($nomCollection)
     {
-        $this->nomCollection = $nomCollection;
+        $this->nomCollection = htmlspecialchars(addslashes($nomCollection));
 
         return $this;
     }
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getid()
     {
         return $this->id;
@@ -46,7 +48,7 @@ class Collection extends Model {
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setid($id)
     {
         $this->id = (int)$id;
@@ -56,7 +58,7 @@ class Collection extends Model {
 
     /**
      * Get the value of especeEnValeur
-     */ 
+     */
     public function getespeceEnValeur()
     {
         return $this->especeEnValeur;
@@ -66,17 +68,17 @@ class Collection extends Model {
      * Set the value of especeEnValeur
      *
      * @return  self
-     */ 
+     */
     public function setespeceEnValeur($especeEnValeur)
     {
-        $this->especeEnValeur = $especeEnValeur;
+        $this->especeEnValeur = htmlspecialchars(addslashes($especeEnValeur));
 
         return $this;
     }
 
     /**
      * Get the value of idUsers
-     */ 
+     */
     public function getIdUsers()
     {
         return $this->idUsers;
@@ -86,7 +88,7 @@ class Collection extends Model {
      * Set the value of idUsers
      *
      * @return  self
-     */ 
+     */
     public function setIdUsers($idUsers)
     {
         $this->idUsers = (int)$idUsers;

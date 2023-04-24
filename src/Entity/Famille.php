@@ -1,9 +1,11 @@
-<?php 
+<?php
 
 namespace Formation\Cours\Entity;
+
 use Formation\Cours\Model;
 
-class Famille extends Model {
+class Famille extends Model
+{
     private ?int $id;
     private ?string $nomFamille;
 
@@ -14,7 +16,7 @@ class Famille extends Model {
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getid()
     {
         return $this->id;
@@ -24,7 +26,7 @@ class Famille extends Model {
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setid($id)
     {
         $this->id = (int)$id;
@@ -34,7 +36,7 @@ class Famille extends Model {
 
     /**
      * Get the value of nomFamille
-     */ 
+     */
     public function getNomFamille()
     {
         return $this->nomFamille;
@@ -44,12 +46,11 @@ class Famille extends Model {
      * Set the value of nomFamille
      *
      * @return  self
-     */ 
+     */
     public function setNomFamille($nomFamille)
     {
-        $this->nomFamille = $nomFamille;
+        $this->nomFamille = htmlspecialchars(addslashes($nomFamille));
 
         return $this;
     }
-
 }
