@@ -1,5 +1,6 @@
 <main class='container'>
-    <?php if (!is_null($flashmessage)) { ?>
+    <?php
+    if (!is_null($flashmessage)) { ?>
         <div class="alert alert-success" role="alert">
             <?php echo $flashmessage; ?>
         </div>
@@ -16,7 +17,14 @@
         foreach ($collections as $collection) {
             echo "<tr>
                 <td><a class='text-black text-decoration-none' href='index.php?page=collection&id=$collection->id&action=details&idUsers=$collection->idUsers&name=$collection->nomCollection'>$collection->nomCollection</a></td>
-                <td>$collection->idUsers</td>";
+                <td>";
+                // Horrible niveau opti
+                foreach ($users as $user) {
+                    if ($user->id === $collection->idUsers) {
+                        echo $user->pseudo;
+                    }
+                }
+                echo "</td>";
                 if (isset($_SESSION['id']) && $_SESSION['id'] === $collection->idUsers) {
                 echo '<td><a href="index.php?page=collection&action=update&id=' . $collection->id . '">Modifier</a> <a href="index.php?page=collection&action=delete&id=' . $collection->id . '">Supprimer</a></td>';
                 } else{
