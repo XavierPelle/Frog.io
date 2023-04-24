@@ -5,11 +5,8 @@ namespace Formation\Cours;
 use Formation\Cours\Controller\Famille;
 use Formation\Cours\Controller\Collection;
 use Formation\Cours\Controller\Especes;
-
+use Formation\Cours\Controller\StatutUICN;
 use Formation\Cours\Controller\Users;
-
-
-
 
 
 class Dispatcher
@@ -42,6 +39,8 @@ class Dispatcher
             new Collection();
         } else if ($this->page === 'users') {
             new Users();
+        } else if ($this->page === 'statut') {
+            new StatutUICN();
         }
     }
 }
