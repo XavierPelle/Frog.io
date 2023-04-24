@@ -145,7 +145,7 @@ INSERT INTO `users` (`id`, `mail`, `pseudo`, `pwd`) VALUES
 
 UPDATE espece set image="uploads/Bufo_bufo.jpg" where id=1;
 UPDATE espece set image="uploads/rhinella_marina.jpg" where id=2;
-UPDATE espece set image="uploads/ophaga pumilio.jpg" where id=3;
+UPDATE espece set image="uploads/oophaga pumilio.jpg" where id=3;
 UPDATE espece set image ="uploads/dendrobates tinctorius.jpg" where id=4;
 UPDATE espece set image="uploads/hyla arborea.jpg" where id=5;
 UPDATE espece set image ="uploads/litoria caerulea.JPG" where id=6;
