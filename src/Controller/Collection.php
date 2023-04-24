@@ -7,6 +7,9 @@ use Formation\Cours\Entity\Collection as Collections;
 use Formation\Cours\Entity\Stocke;
 use Formation\Cours\Entity\Espece;
 use Formation\Cours\Entity\Users;
+use Formation\Cours\Entity\Statutuicn;
+use Formation\Cours\Entity\Nom_vernaculaire;
+use Formation\Cours\Entity\Famille;
 
 
 class Collection
@@ -112,6 +115,27 @@ class Collection
         $stocke = new Stocke();
         $stockes = $stocke->getByAttribute('idCollection', $this->id);
         $especes = [];
+        $espece = new Espece();
+        $espece = $espece->getAll();
+
+
+        $familles = [];
+        $statuts = [];
+        $nom = [];
+
+        foreach ($espece as $esp) {
+
+            $famille = new Famille();
+            $familles[$esp->id] = $famille->getById($esp->idFamille)->nomFamille;
+
+            
+            $statutuicn = new Statutuicn();
+            $statuts[$esp->id] = $statutuicn->getById($esp->idStatut)->statut;
+
+        }
+        
+        $view->setVar('statuts', $statuts);
+        $view->setVar('familles', $familles);
         // on recup l'espece correspondante a la ligne de stocke et on l'assigne au tableau $especes
         foreach ($stockes as $stock) {
             $espece = new Espece;

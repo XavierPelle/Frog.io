@@ -64,7 +64,6 @@ class Especes
             $famille = new Famille();
             $familles[$esp->id] = $famille->getById($esp->idFamille)->nomFamille;
 
-            // Permet de récuperer la propriété nomFamille grace a la méthode getByID qui fait référence à la classe famille sur l'objet $famille
             $statutuicn = new Statutuicn();
             $statuts[$esp->id] = $statutuicn->getById($esp->idStatut)->statut;
 

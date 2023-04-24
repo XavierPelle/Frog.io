@@ -21,8 +21,8 @@
                 <p class="card-text">Nom: <?php echo $espece->nomScientifique; ?></p>
                 <p class="card-text">Taille: <?php echo $espece->taille; ?></p>
                 <p class="card-text">Altitude: <?php echo $espece->altitude; ?></p>
-                <p class="card-text">ID Famille: <?php echo $espece->idFamille; ?></p>
-                <p class="card-text">ID Statut UICN: <?php echo $espece->idStatut; ?></p>
+                <p class="card-text">Famille: <?php echo $familles[$espece->id] ?></p>
+                <p class="card-text">Statut UICN: <?php echo $statuts[$espece->id]; ?></p>
                 <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $_GET['idUsers']) { ?>
                     <a href='index.php?page=collection&action=deleteRow&idC=<?php echo $_GET['id']; ?>&idE=<?php echo $espece->id; ?>' class="btn btn-danger">Supprimer</a>
                     <a href='index.php?page=collection&action=valor&idC=<?php echo $_GET['id']; ?>&idE=<?php echo $espece->id; ?>' class="btn btn-info">Mettre en valeur</a>
