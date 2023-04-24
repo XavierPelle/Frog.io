@@ -150,6 +150,7 @@ class Users
             if ($error1) echo "Mail déjà utilisé";
             if ($error2) echo "Pseudo déjà utilisé";
             if (!$error1 && !$error2) {
+                $_SESSION[$champ] = $change;
                 $modifiateUser->$champ = $change;
                 $modifiateUser->update();
                 $this->manage();

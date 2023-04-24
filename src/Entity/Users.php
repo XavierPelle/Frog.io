@@ -25,7 +25,7 @@ class Users extends Model
 
     public function setId($id)
     {
-        $this->id = $id;
+        $this->id = htmlspecialchars(addslashes($id));
 
         return $this;
     }
@@ -38,7 +38,7 @@ class Users extends Model
 
     public function setMail($mail)
     {
-        $this->mail = $mail;
+        $this->mail = htmlspecialchars(addslashes($mail));
 
         return $this;
     }
@@ -51,7 +51,7 @@ class Users extends Model
 
     public function setPseudo($pseudo)
     {
-        $this->pseudo = $pseudo;
+        $this->pseudo = htmlspecialchars(addslashes($pseudo));
 
         return $this;
     }

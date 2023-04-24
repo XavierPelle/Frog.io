@@ -1,10 +1,12 @@
-<?php 
+<?php
 
 namespace Formation\Cours\Entity;
+
 use Formation\Cours\Model;
 use Formation\Cours\Db;
 
-class Espece extends Model{
+class Espece extends Model
+{
 
     private ?int $id;
     private ?string $nomScientifique;
@@ -38,7 +40,7 @@ class Espece extends Model{
 
     public function setNomScientifique($nomScientifique)
     {
-        $this->nomScientifique = $nomScientifique;
+        $this->nomScientifique = htmlspecialchars(addslashes($nomScientifique));
 
         return $this;
     }
@@ -50,7 +52,7 @@ class Espece extends Model{
 
     public function setImage($image)
     {
-        $this->image = $image;
+        $this->image = htmlspecialchars(addslashes($image));
 
         return $this;
     }
@@ -62,7 +64,7 @@ class Espece extends Model{
 
     public function setTaille($taille)
     {
-        $this->taille = $taille;
+        $this->taille = htmlspecialchars(addslashes($taille));
 
         return $this;
     }
@@ -74,11 +76,11 @@ class Espece extends Model{
 
     public function setAltitude($altitude)
     {
-        $this->altitude = $altitude;
+        $this->altitude = htmlspecialchars(addslashes($altitude));
 
         return $this;
     }
- 
+
     public function getIdFamille()
     {
         return $this->idFamille;
@@ -86,7 +88,7 @@ class Espece extends Model{
 
     public function setIdFamille($idFamille)
     {
-        $this->idFamille = $idFamille;
+        $this->idFamille = htmlspecialchars(addslashes($idFamille));
 
         return $this;
     }
@@ -98,9 +100,8 @@ class Espece extends Model{
 
     public function setIdStatut($idStatut)
     {
-        $this->idStatut = $idStatut;
+        $this->idStatut = htmlspecialchars(addslashes($idStatut));
 
         return $this;
     }
-
 }
