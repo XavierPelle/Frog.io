@@ -4,8 +4,8 @@ namespace Formation\Cours\Controller;
 
 use Formation\Cours\Views;
 use Formation\Cours\Entity\Users as User;
-use Formation\Cours\Entity\Stocke;
-use Formation\Cours\Entity\Espece;
+use Formation\Cours\Controller\Collection as CollectionController;
+use Formation\Cours\Entity\Collection;
 
 class Users
 {
@@ -44,70 +44,89 @@ class Users
                 break;
         }
     }
-
+    //Déclaration fonction login qui récupère les infos du form via $_Post, 
+    //test le pseudo et mot de passe et passe le l'id, le pseudo , le mdp dnas $_SESSION
     public function login()
     {
+        if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
 
-        $user = new User();
-        $users = $user->getAll();
-        // var_dump($users);
-        if (count($_POST) !== 0) {
-            if (isset($_POST['pseudo'])) {
+            $user = new User();
+            $users = $user->getAll();
+            // var_dump($users);
+            if (count($_POST) !== 0) {
+                if (isset($_POST['pseudo'])) {
 
-                $pseudo = $_POST['pseudo'];
-            }
-            if (isset($_POST['pwd'])) {
+                    $pseudo = $_POST['pseudo'];
+                }
+                if (isset($_POST['pwd'])) {
 
-                $pwd = $_POST['pwd'];
-            }
+                    $pwd = $_POST['pwd'];
+                }
 
-            foreach ($users as $user) {
-                $error = true;
+                foreach ($users as $user) {
+                    $error = true;
 
-                if ($pseudo === $user->pseudo && password_verify($pwd, $user->pwd)) {
-                    $_SESSION['logged'] = true;
-                    $_SESSION['pseudo'] = $pseudo;
-                    $_SESSION['id'] = $user->id;
-                    $_SESSION['pwd'] = $user->pwd;
-                    $error = false;
+                    if ($pseudo === $user->pseudo && password_verify($pwd, $user->pwd)) {
+                        $_SESSION['logged'] = true;
+                        $_SESSION['pseudo'] = $pseudo;
+                        $_SESSION['id'] = $user->id;
+                        $_SESSION['pwd'] = $user->pwd;
+                        $error = false;
+                        // var_dump($_SESSION);
+                        $this->manage();
+                        exit;
+                    }
+                }
+                if ($error === true) {
+                    echo "Mauvais mot de passe ou pseudo";
                     // var_dump($_SESSION);
-                    $this->manage();
-                    exit;
+                    // var_dump($_POST);
                 }
             }
-            if ($error === true) {
-                echo "Mauvais mot de passe ou pseudo";
-                // var_dump($_SESSION);
-                // var_dump($_POST);
-            }
-        }
-        $view = new Views('users/login');
-        $view->setVar('page', $this->page);
-        $view->render();
+            $view = new Views('users/login');
+            $view->setVar('page', $this->page);
+            $view->render();
+        } else header("Location: index.php?page=users&action=logged");
     }
-
+    //Affiche la page manage.php
     public function manage()
     {
+        if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
+            header("Location: index.php?page=users&action=login");
+        }
         // var_dump($_SESSION);
         $view = new Views('users/manage');
         $view->setVar('page', $this->page);
         $view->render();
     }
-
+    //Affiche la page delete.php et permet de supprimer l'utilisateur connecté et "nettoie" le $_SESSION
+    //Supprime les collections créées par l'utilisateur supprimé
     public function delete()
     {
+        if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
+            header("Location: index.php?page=users&action=login");
+        }
         $view = new Views('users/delete');
         $view->setVar('page', $this->page);
         $user = new User();
+        $collection = new Collection();
+        $deleteCollections = $collection->getByAttribute('idusers', $_SESSION['id']);
+        foreach ($deleteCollections as $collection) {
+            $collection->delete();
+        }
         // var_dump($_SESSION);
         $users = $user->getByID($_SESSION['id']);
-        var_dump($users);
         $users->delete();
         $view->render();
         $_SESSION = [];
     }
+    //affiche modifiate.php et permet de modifier le mail, ou le pseudo ou le mdp de l'utilisateur connecté
+    // et test si le nouveau pseudo ou mail est déja utilisé
     public function modifiate()
     {
+        if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
+            header("Location: index.php?page=users&action=login");
+        }
         $user = new User();
         $users = $user->getAll();
         $id = $_SESSION['id'];
@@ -141,52 +160,59 @@ class Users
         $view->setVar('page', $this->page);
         $view->render();
     }
-
+    //affiche la page add.php et permet de creer un nouvel utilisateur et le connecte
+    //et test si le mail et pseudo ne sont pas deja utiliser
+    //Attention un pseudo avec ou sans majuscule seras considéré comme identique
     public function add()
     {
-        $user = new User();
-        $users = $user->getAll();
-        if (count($_POST) !== 0) {
-            $pseudo = $_POST['pseudo'];
-            $pwd = $_POST['pwd'];
-            $mail = $_POST['mail'];
-            $error = false;
-            foreach ($users as $user) {
-                if (strtolower($pseudo) === strtolower($user->pseudo) || $mail === $user->mail) {
-                    $error = true;
+        if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
+            $user = new User();
+            $users = $user->getAll();
+            if (count($_POST) !== 0) {
+                $pseudo = $_POST['pseudo'];
+                $pwd = $_POST['pwd'];
+                $mail = $_POST['mail'];
+                $error = false;
+                foreach ($users as $user) {
+                    if (strtolower($pseudo) === strtolower($user->pseudo) || $mail === $user->mail) {
+                        $error = true;
+                    }
+                }
+                if ($error) {
+                    echo "Pseudo ou mail déjà utilisé";
+                } else {
+                    $newUser = new User();
+                    $user = new User();
+                    $newUser->mail = $mail;
+                    $newUser->pwd = $pwd;
+                    $newUser->pseudo = $pseudo;
+                    $newUser->save();
+                    $newUser = $user->getByAttribute('pseudo', $pseudo)[0];
+
+                    $_SESSION['logged'] = true;
+                    $_SESSION['pseudo'] = $pseudo;
+                    $_SESSION['id'] = $newUser->id;
+                    $_SESSION['pwd'] = $newUser->pwd;
+                    // var_dump($_SESSION);
+                    $this->manage();
+                    exit;
                 }
             }
-            if ($error) {
-                echo "Pseudo ou mail déjà utilisé";
-            } else {
-                $newUser = new User();
-                $user = new User();
-                $newUser->mail = $mail;
-                $newUser->pwd = $pwd;
-                $newUser->pseudo = $pseudo;
-                $newUser->save();
-                $newUser = $user->getByAttribute('pseudo', $pseudo)[0];
-
-                $_SESSION['logged'] = true;
-                $_SESSION['pseudo'] = $pseudo;
-                $_SESSION['id'] = $newUser->id;
-                $_SESSION['pwd'] = $newUser->pwd;
-                // var_dump($_SESSION);
-                $this->manage();
-                exit;
-            }
-        }
+        } else header("Location: index.php?page=users&action=logged");
 
         $view = new Views('users/add');
         $view->setVar('page', $this->page);
         $view->render();
     }
-
+    //Affiche la page logout.php et déconnecte l'utilisateur connécté
     public function logout()
     {
+        if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
+            header("Location: index.php?page=users&action=login");
+        }
         $view = new Views('users/logout');
         $view->setVar('page', $this->page);
         $_SESSION = [];
         $view->render();
     }
-};
+}
