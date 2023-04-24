@@ -130,7 +130,7 @@ class Especes
             $taille = $_POST['taille'];
             $idStatut = $_POST['idStatut'];
             $idFamille = $_POST['idFamille'];
-            $image = isset($_POST['image']) ? $_POST['image'] : null;
+
 
             // Si on est en mode 'update', utilise l'espèce existante, sinon on crée une nouvelle espèce.
             if ($this->action === 'update') {
@@ -146,23 +146,19 @@ class Especes
             $espece->idStatut = $idStatut;
             $espece->idFamille = $idFamille;
 
-            // Si une image a été envoyée.
             if (isset($_FILES['image'])) {
-
+            
                 // Gère le téléchargement de l'image.
                 $uploadDir = 'uploads/';
                 $targetFile = $uploadDir . basename($_FILES['image']['name']);
                 $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-                // Vérifie la taille de l'image.
                 if ($_FILES['image']['size'] > 500000) {
                     echo "Image trop volumineuse.";
                 } else {
-                    // Vérifie le format de l'image.
                     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
                         echo "Seuls les formats JPG, JPEG et PNG sont autorisés.";
                     } else {
-                        // Télécharge l'image.
                         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
                             echo "Le fichier a été téléchargé avec succès.";
                             $espece->image = $targetFile;
@@ -251,7 +247,7 @@ class Especes
                 $delesp->delete();
             }
         }
-        // Redirige vers la liste des espèces.
+
         header("Location: index.php?page=especes");
         exit();
     }
