@@ -8,8 +8,13 @@
         <?php echo $_GET['name']; ?>
     </h2>
     <div class="row">
-        <?php foreach ($especes as $espece) { ?>
-            <div class="col-md-4 mb-4">
+        <?php foreach ($especes as $espece) { 
+            if ($espece->id === $col->especeEnValeur) {
+                echo '<div class="col-md-4 mb-4 border prio">';
+            }else {
+                echo '<div class="col-md-4 mb-4">';
+            }
+            ?>
                 <div class="card" style="width: 18rem;">
                     <img src="<?php echo $espece->image; ?>" class="card-img-top" alt="" style="width: 100%; height: 200px; object-fit: cover;">
                     <div class="card-body">

@@ -17,7 +17,17 @@
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $collection->nomCollection; ?></h5>
 
-                        <p class="card-text">Id créateur: <?php echo $collection->idUsers; ?></p>
+                        <p class="card-text">Nom créateur:
+                            <?php
+                            // opti horrible
+                            foreach ($users as $user) {
+                                if ($user->id === $collection->idUsers) {
+                                    echo $user->pseudo;
+
+                                }
+                            }
+                            ?>
+                        </p>
                         <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) { ?>
                         <a href='index.php?page=collection&id=<?php echo $collection->id; ?>&action=details&idUsers=<?php echo $collection->idUsers; ?>&name=<?php echo $collection->nomCollection; ?>' class="btn btn-info">Détails</a>
                         <?php }?>
