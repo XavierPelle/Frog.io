@@ -37,11 +37,20 @@
             <th>Action</th>
         </thead>
         <?php foreach ($grenouilles as $grenouille) {
-            echo "<tr>";
-            echo "<td>$grenouille->nomScientifique</td>";
-            echo "<td>$grenouille->image</td>";
-            echo "<td><a href='index.php?page=collection&action=add&id=" . $_GET['id'] . "&name=" . $_GET['name'] . "&idGre=$grenouille->id'>Ajouter</a></td> ";
-            echo "</tr>";
+            $bool=false;
+            foreach ($especes as $espece) {
+                // test si l'espece est dans la collection
+                if ($grenouille->id === $espece->id) {
+                    $bool = true;
+                }
+            }
+            if (!$bool) {
+                echo "<tr>";
+                echo "<td>$grenouille->nomScientifique</td>";
+                echo "<td>$grenouille->image</td>";
+                echo "<td><a href='index.php?page=collection&action=add&id=" . $_GET['id'] . "&name=" . $_GET['name'] . "&idGre=$grenouille->id'>Ajouter</a></td> ";
+                echo "</tr>";
+            }
         } ?>
     </table>
 </main>

@@ -14,10 +14,14 @@
         </thead>
         <?php
         foreach ($collections as $collection) {
-            echo "<tr>";
-            echo "<td><a class='text-black text-decoration-none' href='index.php?page=collection&id=$collection->id&action=details&name=$collection->nomCollection'>$collection->nomCollection</a></td>";
-            echo "<td>$collection->idUsers</td>";
-            echo '<td><a href="index.php?page=collection&action=update&id=' . $collection->id . '">Modifier</a> <a href="index.php?page=collection&action=delete&id=' . $collection->id . '">Supprimer</a></td>';
+            echo "<tr>
+                <td><a class='text-black text-decoration-none' href='index.php?page=collection&id=$collection->id&action=details&idUsers=$collection->idUsers&name=$collection->nomCollection'>$collection->nomCollection</a></td>
+                <td>$collection->idUsers</td>";
+                if (isset($_SESSION['id']) && $_SESSION['id'] === $collection->idUsers) {
+                echo '<td><a href="index.php?page=collection&action=update&id=' . $collection->id . '">Modifier</a> <a href="index.php?page=collection&action=delete&id=' . $collection->id . '">Supprimer</a></td>';
+                } else{
+                    echo '<td></td>';
+                }
             echo "</tr>";
         }
         ?>
